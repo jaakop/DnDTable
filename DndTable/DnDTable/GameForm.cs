@@ -14,21 +14,29 @@ using GameEngine;
 namespace DnDTable
 {
     public partial class GameForm : Form
-    {   
+    {
+        int x = 0;
+        int y = 200;
+        Graphics graphics;
         public GameForm(Screen screen)
         {
             InitializeComponent();
-            Application.Idle += Application_Idle;
+            //Application.Idle += Application_Idle;
+            DoubleBuffered = true;
 
             Rectangle bounds = screen.Bounds;
             Bounds = bounds;
+
+            graphics = CreateGraphics();
         }
 
-        void GameUpdate()
-        {
-        }
 
         #region
+        /*
+        void GameUpdate()
+        {
+            Invalidate();
+        }
         //GameLoop DO NOT TOUCH
         //NO EVEN TOUCHY TOUCHY
         //*not sure why it works*
@@ -51,14 +59,14 @@ namespace DnDTable
             while (IsApplicationIdle())
             {
                 GameUpdate();
-                Invalidate();
+                //Invalidate();
             }
         }
         private bool IsApplicationIdle()
         {
             NativeMessage result;
             return PeekMessage(out result, IntPtr.Zero, (uint)0, (uint)0, (uint)0) == 0;
-        }
+        }*/
         #endregion
     }
 }
