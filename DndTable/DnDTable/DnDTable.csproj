@@ -49,6 +49,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Editor\Camera.cs" />
+    <Compile Include="GameEngine\Character.cs" />
+    <Compile Include="GameEngine\Level\Layer.cs" />
+    <Compile Include="GameEngine\Level\Level.cs" />
+    <Compile Include="GameEngine\Level\LevelConstructor.cs" />
+    <Compile Include="GameEngine\Level\Tile.cs" />
     <Compile Include="GameForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -61,6 +67,12 @@
     <Compile Include="GMForm.Designer.cs">
       <DependentUpon>GMForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="LevelEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LevelEditor.Designer.cs">
+      <DependentUpon>LevelEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="GameForm.resx">
@@ -68,6 +80,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GMForm.resx">
       <DependentUpon>GMForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LevelEditor.resx">
+      <DependentUpon>LevelEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -77,6 +92,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -93,10 +109,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GameEngine\GameEngine.csproj">
-      <Project>{538dc6c1-daf1-4114-8ffe-f79cf51d1ff8}</Project>
-      <Name>GameEngine</Name>
-    </ProjectReference>
+    <None Include="Resources\download.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

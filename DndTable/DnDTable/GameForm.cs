@@ -10,25 +10,39 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
 using GameEngine;
+using GameEngine.Level;
 
 namespace DnDTable
 {
     public partial class GameForm : Form
     {
-        int x = 0;
-        int y = 200;
         Graphics graphics;
+        Level level;
         public GameForm(Screen screen)
         {
             InitializeComponent();
             //Application.Idle += Application_Idle;
             DoubleBuffered = true;
-
+            
             Rectangle bounds = screen.Bounds;
             Bounds = bounds;
-
+            
             graphics = CreateGraphics();
+
+            Layer layer = new Layer();
+            for(int i = 0; i < 32; i++)
+            {
+                for(int j = 0; j < 18; j++)
+                {
+                    Tile tile = new Tile(i, j, Properties.Resources.download);
+                    layer.AddTile(tile);
+                }
+            }
+            layer.AddTile(new Tile(1, 1));
+            level = new Level();
+            level.AddALayer(layer);
         }
+
 
 
         #region
@@ -68,5 +82,10 @@ namespace DnDTable
             return PeekMessage(out result, IntPtr.Zero, (uint)0, (uint)0, (uint)0) == 0;
         }*/
         #endregion
+
+        private void GameForm_Paint(object sender, PaintEventArgs e)
+        {
+            level.DrawLevel(e.Graphics, 60);
+        }
     }
 }

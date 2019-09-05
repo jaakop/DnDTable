@@ -1,6 +1,6 @@
 ﻿namespace DnDTable
 {
-    partial class GameForm
+    partial class LevelEditor
     {
         /// <summary>
         /// Required designer variable.
@@ -28,23 +28,42 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
-            // GameForm
+            // panel1
+            // 
+            this.panel1.Location = new System.Drawing.Point(33, 22);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(331, 279);
+            this.panel1.TabIndex = 0;
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.panel2.Location = new System.Drawing.Point(473, 40);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(203, 290);
+            this.panel2.TabIndex = 1;
+            // 
+            // LevelEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.ControlDark;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "GameForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "GameForm";
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.GameForm_Paint);
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.panel1);
+            this.Name = "LevelEditor";
+            this.Text = "LevelEditor";
+            this.Resize += new System.EventHandler(this.LevelEditor_Resize);
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panel2;
     }
 }

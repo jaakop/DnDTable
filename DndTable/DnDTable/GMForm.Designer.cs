@@ -45,7 +45,7 @@
             // 
             // StartButton
             // 
-            this.StartButton.Location = new System.Drawing.Point(205, 32);
+            this.StartButton.Location = new System.Drawing.Point(215, 32);
             this.StartButton.Name = "StartButton";
             this.StartButton.Size = new System.Drawing.Size(127, 33);
             this.StartButton.TabIndex = 1;
@@ -65,7 +65,7 @@
             // 
             // LoadGameButton
             // 
-            this.LoadGameButton.Location = new System.Drawing.Point(205, 71);
+            this.LoadGameButton.Location = new System.Drawing.Point(215, 71);
             this.LoadGameButton.Name = "LoadGameButton";
             this.LoadGameButton.Size = new System.Drawing.Size(127, 33);
             this.LoadGameButton.TabIndex = 3;
@@ -76,23 +76,24 @@
             // 
             this.LevelEditorButton.Location = new System.Drawing.Point(59, 71);
             this.LevelEditorButton.Name = "LevelEditorButton";
-            this.LevelEditorButton.Size = new System.Drawing.Size(127, 33);
+            this.LevelEditorButton.Size = new System.Drawing.Size(140, 33);
             this.LevelEditorButton.TabIndex = 4;
             this.LevelEditorButton.Text = "Open LevelEditor";
             this.LevelEditorButton.UseVisualStyleBackColor = true;
+            this.LevelEditorButton.Click += new System.EventHandler(this.LevelEditorButton_Click);
             // 
             // GMForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(392, 129);
+            this.ClientSize = new System.Drawing.Size(365, 129);
             this.Controls.Add(this.LevelEditorButton);
             this.Controls.Add(this.LoadGameButton);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.StartButton);
             this.Controls.Add(this.ScreenCom);
             this.Name = "GMForm";
-            this.Text = "GameForm";
+            this.Text = "GMScreen";
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.28307.489
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DnDTable", "DnDTable\DnDTable.csproj", "{22DA9057-2274-4625-908E-9F4A82FEDEFF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameEngine", "GameEngine\GameEngine.csproj", "{538DC6C1-DAF1-4114-8FFE-F79CF51D1FF8}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{22DA9057-2274-4625-908E-9F4A82FEDEFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22DA9057-2274-4625-908E-9F4A82FEDEFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22DA9057-2274-4625-908E-9F4A82FEDEFF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{538DC6C1-DAF1-4114-8FFE-F79CF51D1FF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{538DC6C1-DAF1-4114-8FFE-F79CF51D1FF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{538DC6C1-DAF1-4114-8FFE-F79CF51D1FF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{538DC6C1-DAF1-4114-8FFE-F79CF51D1FF8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

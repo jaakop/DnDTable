@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using GameEngine;
+
 namespace DnDTable
 {
     public partial class GMForm : Form
@@ -33,6 +35,14 @@ namespace DnDTable
             Height = 800;
             CenterToScreen();
             Controls.Clear();
+        }
+
+        private void LevelEditorButton_Click(object sender, EventArgs e)
+        {
+            Hide();
+            LevelEditor editor = new LevelEditor();
+            editor.FormClosed += delegate { Show(); };
+            editor.ShowDialog();
         }
     }
 }
