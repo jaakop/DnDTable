@@ -29,15 +29,39 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
+            this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.vScrollBar1);
+            this.panel1.Controls.Add(this.hScrollBar1);
             this.panel1.Location = new System.Drawing.Point(33, 22);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(331, 279);
             this.panel1.TabIndex = 0;
+            this.panel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseMove);
+            // 
+            // vScrollBar1
+            // 
+            this.vScrollBar1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.vScrollBar1.Location = new System.Drawing.Point(310, 0);
+            this.vScrollBar1.Name = "vScrollBar1";
+            this.vScrollBar1.Size = new System.Drawing.Size(21, 258);
+            this.vScrollBar1.TabIndex = 1;
+            this.vScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.MoveCamera);
+            // 
+            // hScrollBar1
+            // 
+            this.hScrollBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.hScrollBar1.Location = new System.Drawing.Point(0, 258);
+            this.hScrollBar1.Name = "hScrollBar1";
+            this.hScrollBar1.Size = new System.Drawing.Size(331, 21);
+            this.hScrollBar1.TabIndex = 0;
+            this.hScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.MoveCamera);
             // 
             // panel2
             // 
@@ -57,6 +81,7 @@
             this.Name = "LevelEditor";
             this.Text = "LevelEditor";
             this.Resize += new System.EventHandler(this.LevelEditor_Resize);
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -65,5 +90,7 @@
 
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.VScrollBar vScrollBar1;
+        private System.Windows.Forms.HScrollBar hScrollBar1;
     }
 }

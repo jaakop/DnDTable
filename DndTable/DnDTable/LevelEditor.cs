@@ -16,6 +16,7 @@ namespace DnDTable
     {
         int gridW = 32;
         int gridH = 18;
+        int tileSize = 75;
 
         Button newLevelButton;
         Button loadLevelButton;
@@ -23,11 +24,27 @@ namespace DnDTable
 
         Editor.Camera cam;
         Level level;
+
+        Tile oldTile;
+
         public LevelEditor()
         {
             InitializeComponent();
             Bounds = Screen.AllScreens[0].Bounds;
             AdjustSize();
+            DoubleBuffered = true;
+            SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer, true);
+
+            panel1.Paint += Panel1_Paint;
+
+            hScrollBar1.Maximum = gridW + 5;
+            hScrollBar1.Minimum = 5;
+            vScrollBar1.Maximum = gridH + 5;
+            vScrollBar1.Minimum = 3;
+
+            
+
             newLevelButton = InitializeButton(panel2, 1, "New Level", -65);
             saveLevelButton = InitializeButton(panel2, 2, "Save Level", -70);
             loadLevelButton = InitializeButton(panel2, 3, "Load Level", -75);
@@ -36,11 +53,46 @@ namespace DnDTable
             panel2.Controls.Add(saveLevelButton);
             panel2.Controls.Add(loadLevelButton);
 
-            cam = new Editor.Camera(gridW / 2, gridH / 2, 16, 9);
+            cam = new Editor.Camera(5, 3, 14, 10);
             level = new Level();
             Layer layer = new Layer();
             level.AddALayer(layer);
+
+            for(int i = 0; i < gridW; i++)
+            {
+                for(int j = 0; j < gridH; j++)
+                {
+                    level.Layers[0].AddTile(new Tile(i, j));
+                }
+            }
+            level.Layers[0].AddTile(new Tile(gridW - 1, gridH - 1, Properties.Resources.download));
+            panel1.Invalidate();
         }
+
+        private void Panel1_Paint(object sender, PaintEventArgs e)
+        {
+            Graphics g = panel1.CreateGraphics();
+            g.Clear(Color.White);
+            BufferedGraphicsContext dc = new BufferedGraphicsContext();
+            BufferedGraphics backbuffer = dc.Allocate(g, new Rectangle(new Point(0, 0), g.VisibleClipBounds.Size.ToSize()));
+            backbuffer.Graphics.FillRectangle(Brushes.White, new Rectangle(0,0, g.VisibleClipBounds.Size.ToSize().Width, g.VisibleClipBounds.Size.ToSize().Height));
+            foreach(Layer layer in level.Layers)
+            {
+                foreach(Tile tile in layer.Tiles)
+                {
+                    if (tile.X < cam.Location().X + cam.FovX / 2&
+                        tile.X > cam.Location().X - cam.FovX / 2&
+                        tile.Y < cam.Location().Y + cam.FovY / 2&
+                        tile.Y > cam.Location().Y - cam.FovY / 2)
+                    {
+                        tile.DrawTile(backbuffer.Graphics, tile.X - cam.Location().X + cam.FovX / 2, tile.Y - cam.Location().Y + cam.FovY / 2, tileSize, 0);
+                        tile.DrawWireFrame(backbuffer.Graphics, tile.X - cam.Location().X + cam.FovX / 2, tile.Y - cam.Location().Y + cam.FovY / 2, tileSize, 0);
+                    }
+                }
+            }
+            backbuffer.Render(g);
+        }
+
         Button InitializeButton(Panel panel, int position, string buttonText, int offSet)
         {
 
@@ -97,11 +149,62 @@ namespace DnDTable
 
         void AdjustSize()
         {
-            panel1.Width = Width / 4 * 3;
+            panel1.Width = Width / 4 * 3 - vScrollBar1.Width;
             panel2.Width = Width / 4;
-            panel1.Height = Height;
+            panel1.Height = Height - hScrollBar1.Height * 3;
             panel2.Height = Height;
             panel2.Location = new Point(Width / 4 * 3, 0);
+        }
+
+        private void MoveCamera(object sender, ScrollEventArgs e)
+        {
+            if (sender == hScrollBar1)
+            {
+                cam.Move(hScrollBar1.Value, cam.Location().Y);
+            }else if(sender == vScrollBar1)
+            {
+                cam.Move(cam.Location().X, vScrollBar1.Value);
+            }
+            panel1.Invalidate();
+            System.GC.Collect();
+        }
+
+        private void panel1_MouseMove(object sender, MouseEventArgs e)
+        {
+            Point pos = MousePosition;
+            Tile newTile = null;
+            if (level == null)
+                return;
+
+            foreach (Layer layer in level.Layers)
+            {
+                foreach (Tile tile in layer.Tiles)
+                {
+                    int tileX = tile.X * tileSize - cam.Location().X * tileSize + cam.FovX / 2 * tileSize;
+                    int tileY = tile.Y * tileSize - cam.Location().Y * tileSize + cam.FovY / 2 * tileSize;
+
+                    if (pos.X > tileX && pos.X < tileX + tileSize)
+                    {
+                        if (pos.Y > tileY && pos.Y < tileY + tileSize)
+                        {
+                            Console.WriteLine(tile.X + "\t" + tile.Y);
+                            newTile = tile;
+                        }
+                    }
+                }
+            }
+
+            if (newTile == null)
+                return;
+            if (oldTile == newTile)
+                return;
+
+            if (oldTile != null)
+                oldTile.HighLight(panel1.CreateGraphics(), oldTile.X - cam.Location().X + cam.FovX / 2, oldTile.Y - cam.Location().Y + cam.FovY / 2, tileSize, false);
+
+            newTile.HighLight(panel1.CreateGraphics(), newTile.X - cam.Location().X + cam.FovX / 2, newTile.Y - cam.Location().Y + cam.FovY / 2, tileSize, true);
+
+            oldTile = newTile;
         }
     }
 }
