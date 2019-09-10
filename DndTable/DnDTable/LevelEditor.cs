@@ -26,7 +26,7 @@ namespace DnDTable
         Level level;
 
         Tile oldTile;
-
+        Tile selectedTile;
         public LevelEditor()
         {
             InitializeComponent();
@@ -171,10 +171,10 @@ namespace DnDTable
 
         private void panel1_MouseMove(object sender, MouseEventArgs e)
         {
-            Point pos = MousePosition;
-            Tile newTile = null;
+            Point pos = new Point(e.X, e.Y);
             if (level == null)
                 return;
+            //panel1.CreateGraphics().DrawRectangle(Pens.Red, new Rectangle(pos.X - tileSize/2, pos.Y - tileSize / 2, tileSize, tileSize));
 
             foreach (Layer layer in level.Layers)
             {
@@ -188,23 +188,43 @@ namespace DnDTable
                         if (pos.Y > tileY && pos.Y < tileY + tileSize)
                         {
                             Console.WriteLine(tile.X + "\t" + tile.Y);
-                            newTile = tile;
+
+                            if (tile.X < cam.Location().X + cam.FovX / 2 &
+                                tile.X > cam.Location().X - cam.FovX / 2 &
+                                tile.Y < cam.Location().Y + cam.FovY / 2 &
+                                tile.Y > cam.Location().Y - cam.FovY / 2)
+                            {
+                                selectedTile = tile;
+                            }
                         }
                     }
                 }
             }
-
-            if (newTile == null)
-                return;
-            if (oldTile == newTile)
+            if (oldTile != null && selectedTile != null && oldTile.X == selectedTile.X && oldTile.Y == selectedTile.Y )
                 return;
 
             if (oldTile != null)
                 oldTile.HighLight(panel1.CreateGraphics(), oldTile.X - cam.Location().X + cam.FovX / 2, oldTile.Y - cam.Location().Y + cam.FovY / 2, tileSize, false);
 
-            newTile.HighLight(panel1.CreateGraphics(), newTile.X - cam.Location().X + cam.FovX / 2, newTile.Y - cam.Location().Y + cam.FovY / 2, tileSize, true);
+            if (selectedTile == null)
+                return;
+            selectedTile.HighLight(panel1.CreateGraphics(), selectedTile.X - cam.Location().X + cam.FovX / 2, selectedTile.Y - cam.Location().Y + cam.FovY / 2, tileSize, true);
 
-            oldTile = newTile;
+            oldTile = selectedTile
+;
+            GC.Collect();
+        }
+
+        private void panel1_MouseClick(object sender, MouseEventArgs e)
+        {
+            if(e.Button == MouseButtons.Left && selectedTile != null)
+            {
+                Tile newTile = new Tile(selectedTile.X, selectedTile.Y, Properties.Resources.download);
+                level.Layers[0].AddTile(newTile);
+                selectedTile = newTile;
+                oldTile = selectedTile;
+                selectedTile.HighLight(panel1.CreateGraphics(), selectedTile.X - cam.Location().X + cam.FovX / 2, selectedTile.Y - cam.Location().Y + cam.FovY / 2, tileSize, true);
+            }
         }
     }
 }
