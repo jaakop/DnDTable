@@ -25,8 +25,24 @@ namespace DnDTable.GameEngine.Tools
         /// <returns>List of images sliced from the tilemap (in order L2R & T2B)</returns>
         public List<Image> SliceTileMap()
         {
+            Bitmap tilemap = (Bitmap)GetImage();
+            System.Drawing.Imaging.PixelFormat format = tilemap.PixelFormat;
 
-            return null;
+            List<Image> images = new List<Image>();
+
+            int tilesX = tilemap.Width / tileSize;
+            int tilesY = tilemap.Height / tileSize;
+
+            for (int i = 0; i < tilesX; i++)
+            {
+                for (int j = 0; j < tilesY; j++)
+                {
+                    Image image = tilemap.Clone(new Rectangle(i * tileSize, j * tileSize, tileSize, tileSize), format);
+                    images.Add(image);
+                }
+            }
+
+            return images;
         }
 
         Image GetImage()
