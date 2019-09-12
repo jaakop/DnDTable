@@ -10,6 +10,7 @@ using System.Windows.Forms;
 
 using GameEngine;
 using GameEngine.Level;
+using GameEngine.Editor;
 
 namespace DnDTable
 {
@@ -24,7 +25,7 @@ namespace DnDTable
         Button loadLevelButton;
         Button saveLevelButton;
 
-        Editor.Camera cam;
+        Camera cam;
         Level level;
 
         Tile oldTile;
@@ -51,12 +52,13 @@ namespace DnDTable
             newLevelButton = InitializeButton(panel2, 1, "New Level", -65);
             saveLevelButton = InitializeButton(panel2, 2, "Save Level", -70);
             loadLevelButton = InitializeButton(panel2, 3, "Load Level", -75);
+
             //Buttons added to the panel
             panel2.Controls.Add(newLevelButton);
             panel2.Controls.Add(saveLevelButton);
             panel2.Controls.Add(loadLevelButton);
 
-            cam = new Editor.Camera(5, 3, 14, 10);
+            cam = new Camera(5, 3, 14, 10);
             level = new Level();
             Layer layer = new Layer();
             level.AddALayer(layer);
@@ -73,7 +75,7 @@ namespace DnDTable
             List<Image> tiles = tileMap.SliceTileMap();
 
             level.Layers[0].AddTile(new Tile(1,  1, (Bitmap)tiles[6]));
-
+            
             panel1.Invalidate();
         }
 

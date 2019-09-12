@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace DnDTable.GameEngine.Editor
+namespace GameEngine.Editor
 {
-    class TileButton : Button
+    public class TileButton : Button
     {
         int id;
         
