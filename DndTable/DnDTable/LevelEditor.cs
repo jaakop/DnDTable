@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using GameEngine;
 using GameEngine.Level;
 
 namespace DnDTable
@@ -67,7 +68,12 @@ namespace DnDTable
                     level.Layers[0].AddTile(new Tile(i, j));
                 }
             }
-            level.Layers[0].AddTile(new Tile(gridW - 1, gridH - 1, Properties.Resources.download));
+
+            GameEngine.TileMap tileMap = new GameEngine.TileMap("C:/Users/Jaakko/Desktop/terrain_atlas.png", 32);
+            List<Image> tiles = tileMap.SliceTileMap();
+
+            level.Layers[0].AddTile(new Tile(1,  1, (Bitmap)tiles[6]));
+
             panel1.Invalidate();
         }
 

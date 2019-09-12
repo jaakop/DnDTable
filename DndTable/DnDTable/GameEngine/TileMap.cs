@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
 
-namespace DnDTable.GameEngine.Tools
+namespace DnDTable.GameEngine
 {
     public class TileMap
     {
@@ -33,9 +33,9 @@ namespace DnDTable.GameEngine.Tools
             int tilesX = tilemap.Width / tileSize;
             int tilesY = tilemap.Height / tileSize;
 
-            for (int i = 0; i < tilesX; i++)
+            for (int j = 0; j < tilesY; j++)
             {
-                for (int j = 0; j < tilesY; j++)
+                for (int i = 0; i < tilesX; i++)
                 {
                     Image image = tilemap.Clone(new Rectangle(i * tileSize, j * tileSize, tileSize, tileSize), format);
                     images.Add(image);

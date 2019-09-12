@@ -51,6 +51,9 @@
   <ItemGroup>
     <Compile Include="GameEngine\Editor\Camera.cs" />
     <Compile Include="GameEngine\Character.cs" />
+    <Compile Include="GameEngine\Editor\TileButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="GameEngine\Level\Layer.cs" />
     <Compile Include="GameEngine\Level\Level.cs" />
     <Compile Include="GameEngine\Level\LevelConstructor.cs" />
