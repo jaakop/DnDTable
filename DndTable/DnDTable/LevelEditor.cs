@@ -14,6 +14,7 @@ namespace DnDTable
 {
     public partial class LevelEditor : Form
     {
+        #region Class Variables
         int gridW = 32;
         int gridH = 18;
         int tileSize = 75;
@@ -27,6 +28,8 @@ namespace DnDTable
 
         Tile oldTile;
         Tile selectedTile;
+        #endregion
+
         public LevelEditor()
         {
             InitializeComponent();
@@ -43,12 +46,11 @@ namespace DnDTable
             vScrollBar1.Maximum = gridH + 5;
             vScrollBar1.Minimum = 3;
 
-            
-
+            //Button initialization
             newLevelButton = InitializeButton(panel2, 1, "New Level", -65);
             saveLevelButton = InitializeButton(panel2, 2, "Save Level", -70);
             loadLevelButton = InitializeButton(panel2, 3, "Load Level", -75);
-
+            //Buttons added to the panel
             panel2.Controls.Add(newLevelButton);
             panel2.Controls.Add(saveLevelButton);
             panel2.Controls.Add(loadLevelButton);
@@ -93,6 +95,14 @@ namespace DnDTable
             backbuffer.Render(g);
         }
 
+        /// <summary>
+        /// Initializes a button
+        /// </summary>
+        /// <param name="panel">Panel, where the button belongs to</param>
+        /// <param name="position">Button position</param>
+        /// <param name="buttonText">Text of the button</param>
+        /// <param name="offSet">Offset for the button position</param>
+        /// <returns></returns>
         Button InitializeButton(Panel panel, int position, string buttonText, int offSet)
         {
 
@@ -106,6 +116,11 @@ namespace DnDTable
             return button;
         }
 
+        /// <summary>
+        /// Handles the button presses
+        /// </summary>
+        /// <param name="sender">Button, which was pressed</param>
+        /// <param name="e"></param>
         private void HandleButtonClick(object sender, EventArgs e)
         {
             if(sender == newLevelButton)
@@ -147,6 +162,9 @@ namespace DnDTable
             }
         }
 
+        /// <summary>
+        /// Adjusts the size of the panels and position of buttons
+        /// </summary>
         void AdjustSize()
         {
             panel1.Width = Width / 4 * 3 - vScrollBar1.Width;
@@ -156,6 +174,11 @@ namespace DnDTable
             panel2.Location = new Point(Width / 4 * 3, 0);
         }
 
+        /// <summary>
+        /// Where the camera movement is handeled
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MoveCamera(object sender, ScrollEventArgs e)
         {
             if (sender == hScrollBar1)
@@ -174,7 +197,6 @@ namespace DnDTable
             Point pos = new Point(e.X, e.Y);
             if (level == null)
                 return;
-            //panel1.CreateGraphics().DrawRectangle(Pens.Red, new Rectangle(pos.X - tileSize/2, pos.Y - tileSize / 2, tileSize, tileSize));
 
             foreach (Layer layer in level.Layers)
             {
@@ -187,7 +209,6 @@ namespace DnDTable
                     {
                         if (pos.Y > tileY && pos.Y < tileY + tileSize)
                         {
-                            Console.WriteLine(tile.X + "\t" + tile.Y);
 
                             if (tile.X < cam.Location().X + cam.FovX / 2 &
                                 tile.X > cam.Location().X - cam.FovX / 2 &
