@@ -9,13 +9,17 @@ namespace GameEngine.Level
     public class Level
     {
         List<Layer> layers;
+        List<TileMap> maps;
+
         /// <summary>
         /// A Level Object
         /// </summary>
         public Level()
         {
             layers = new List<Layer>();
+            maps = new List<TileMap>();
         }
+
         /// <summary>
         /// Add a layer to the lavel
         /// </summary>
@@ -24,6 +28,12 @@ namespace GameEngine.Level
         {
             layers.Add(layerToAdd);
         }
+
+        public void AddAMap(TileMap map)
+        {
+            maps.Add(map);
+        }
+
         /// <summary>
         /// Draw the level
         /// </summary>
@@ -39,10 +49,13 @@ namespace GameEngine.Level
                 }
             }
         }
+
         /// <summary>
         /// Returns the layer list of the level
         /// </summary>
         public List<Layer> Layers { get => layers; }
+
+        public List<TileMap> Maps { get => maps; }
 
     }
 }

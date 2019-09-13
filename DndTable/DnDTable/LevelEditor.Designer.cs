@@ -32,7 +32,11 @@
             this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
             this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.vScrollBar2 = new System.Windows.Forms.VScrollBar();
             this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -67,10 +71,28 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.panel2.Controls.Add(this.panel3);
             this.panel2.Location = new System.Drawing.Point(473, 40);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(203, 290);
             this.panel2.TabIndex = 1;
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.vScrollBar2);
+            this.panel3.Location = new System.Drawing.Point(40, 137);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(160, 100);
+            this.panel3.TabIndex = 0;
+            // 
+            // vScrollBar2
+            // 
+            this.vScrollBar2.Dock = System.Windows.Forms.DockStyle.Right;
+            this.vScrollBar2.Location = new System.Drawing.Point(138, 0);
+            this.vScrollBar2.Name = "vScrollBar2";
+            this.vScrollBar2.Size = new System.Drawing.Size(22, 100);
+            this.vScrollBar2.TabIndex = 0;
+            this.vScrollBar2.Scroll += new System.Windows.Forms.ScrollEventHandler(this.vScrollBar2_Scroll);
             // 
             // LevelEditor
             // 
@@ -83,6 +105,8 @@
             this.Text = "LevelEditor";
             this.Resize += new System.EventHandler(this.LevelEditor_Resize);
             this.panel1.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -93,5 +117,7 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.VScrollBar vScrollBar1;
         private System.Windows.Forms.HScrollBar hScrollBar1;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.VScrollBar vScrollBar2;
     }
 }

@@ -25,11 +25,15 @@ namespace DnDTable
         Button loadLevelButton;
         Button saveLevelButton;
 
+        List<TileButton> buttons;
+
         Camera cam;
         Level level;
 
         Tile oldTile;
         Tile selectedTile;
+
+        Image selectedImage;
         #endregion
 
         public LevelEditor()
@@ -71,12 +75,53 @@ namespace DnDTable
                 }
             }
 
-            GameEngine.TileMap tileMap = new GameEngine.TileMap("C:/Users/Jaakko/Desktop/terrain_atlas.png", 32);
-            List<Image> tiles = tileMap.SliceTileMap();
-
-            level.Layers[0].AddTile(new Tile(1,  1, (Bitmap)tiles[6]));
-            
+            level.AddAMap(new TileMap("C:/Users/Jaakko/Desktop/terrain_atlas.png", 32));
+            for (int i = 0; i < level.Maps.Count; i++)
+            {
+                List<Image> images = level.Maps[i].SliceTileMap();
+                buttons = new List<TileButton>();
+                for (int j = 0; j < images.Count; j++)
+                {
+                    TileButton tileButton = new TileButton(j, i, images[j]);
+                    tileButton.Width = 40;
+                    tileButton.Height = 40;
+                    tileButton.Click += TileSelection;
+                    buttons.Add(tileButton);
+                }
+            }
+            SetButtons();
             panel1.Invalidate();
+        }
+
+        void SetButtons()
+        {
+            if (level == null)
+                return;
+            for (int i = 0; i < level.Maps.Count; i++)
+            {
+                int tileId = 0;
+                int l = 0;
+                for (; ; l++)
+                {
+                    if (tileId >= buttons.Count)
+                        break;
+                    for (int k = 0; k < (panel3.Width - vScrollBar2.Width) / 40; k++)
+                    {
+                        if (tileId >= buttons.Count)
+                            break;
+                        buttons[tileId].Location = new Point(k * 40, l * 40 - vScrollBar2.Value);
+                        panel3.Controls.Add(buttons[tileId]);
+                        tileId++;
+                    }
+                }
+                vScrollBar2.Maximum = l * 30;
+            }
+        }
+
+        private void TileSelection(object sender, EventArgs e)
+        {
+            TileButton button = (TileButton)sender;
+            selectedImage = level.Maps[button.MapId].SliceTileMap()[button.TileId];
         }
 
         private void Panel1_Paint(object sender, PaintEventArgs e)
@@ -148,6 +193,7 @@ namespace DnDTable
         private void LevelEditor_Resize(object sender, EventArgs e)
         {
             AdjustSize();
+            SetButtons();
             if (panel2 == null || newLevelButton == null || saveLevelButton == null || loadLevelButton == null)
                 return;
             if (panel2.Width < newLevelButton.Width + saveLevelButton.Width + 100)
@@ -180,6 +226,9 @@ namespace DnDTable
             panel1.Height = Height - hScrollBar1.Height * 3;
             panel2.Height = Height;
             panel2.Location = new Point(Width / 4 * 3, 0);
+            panel3.Width = panel2.Width - vScrollBar2.Width;
+            panel3.Height = panel2.Height / 3;
+            panel3.Location = new Point(0, panel2.Height - panel3.Height - 50);
         }
 
         /// <summary>
@@ -248,12 +297,23 @@ namespace DnDTable
         {
             if(e.Button == MouseButtons.Left && selectedTile != null)
             {
-                Tile newTile = new Tile(selectedTile.X, selectedTile.Y, Properties.Resources.download);
+                if(selectedImage == null)
+                {
+                    MessageBox.Show("You haven't selected a tile");
+                    return;
+                }
+                Tile newTile = new Tile(selectedTile.X, selectedTile.Y, (Bitmap)selectedImage);
                 level.Layers[0].AddTile(newTile);
                 selectedTile = newTile;
                 oldTile = selectedTile;
                 selectedTile.HighLight(panel1.CreateGraphics(), selectedTile.X - cam.Location().X + cam.FovX / 2, selectedTile.Y - cam.Location().Y + cam.FovY / 2, tileSize, true);
+                panel1.Invalidate();
             }
+        }
+
+        private void vScrollBar2_Scroll(object sender, ScrollEventArgs e)
+        {
+            SetButtons();
         }
     }
 }

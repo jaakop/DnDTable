@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
 
-namespace DnDTable.GameEngine
+namespace GameEngine
 {
     public class TileMap
     {

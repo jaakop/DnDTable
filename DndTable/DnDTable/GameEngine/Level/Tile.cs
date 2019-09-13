@@ -92,6 +92,10 @@ namespace GameEngine.Level
         /// <param name="highlight">Is the tile highlighted or not</param>
         public void HighLight(Graphics g, int X, int Y, int size, bool highlight)
         {
+            if (!highlight)
+            {
+                g.FillRectangle(Brushes.White, new Rectangle(X * size, Y * size, size + 1, size + 1));
+            }
             if (image != null)
             {
                 g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;

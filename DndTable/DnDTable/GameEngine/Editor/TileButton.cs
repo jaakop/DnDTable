@@ -10,13 +10,18 @@ namespace GameEngine.Editor
 {
     public class TileButton : Button
     {
-        int id;
-        
-        public TileButton(int ImageId, Image image)
+        int tileId;
+        int mapId;
+
+        public TileButton(int ImageId, int MapId, Image image)
         {
-            id = ImageId;
+            tileId = ImageId;
+            mapId = MapId;
             BackgroundImage = image;
+            BackgroundImageLayout = ImageLayout.Stretch;
         }
-        public int Id { get => id; }
+
+        public int TileId { get => tileId; }
+        public int MapId { get => mapId; }
     }
 }
