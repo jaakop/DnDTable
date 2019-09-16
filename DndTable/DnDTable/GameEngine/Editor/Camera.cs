@@ -71,11 +71,11 @@ namespace GameEngine.Editor
         /// <summary>
         /// The width of the Field of view
         /// </summary>
-        public int FovX { get => fovX; }
+        public int FovX { get => fovX; set => fovX = value; }
         /// <summary>
         /// The height of the Field of view
         /// </summary>
-        public int FovY { get => fovY; }
+        public int FovY { get => fovY; set => fovY = value; }
 
     }
 }

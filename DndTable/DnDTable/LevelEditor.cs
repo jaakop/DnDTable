@@ -25,6 +25,8 @@ namespace DnDTable
         Button loadLevelButton;
         Button saveLevelButton;
 
+        CheckBox eraseSelection;
+
         List<TileButton> buttons;
 
         Camera cam;
@@ -63,6 +65,9 @@ namespace DnDTable
             panel2.Controls.Add(loadLevelButton);
 
             cam = new Camera(5, 3, 14, 10);
+
+            cam.FovX = (panel1.Width - panel1.Width/20) / 75;
+            cam.FovY = (panel1.Height - panel1.Height / 20) / 75;
             level = new Level();
             Layer layer = new Layer();
             level.AddALayer(layer);
@@ -76,32 +81,47 @@ namespace DnDTable
             }
 
             level.AddAMap(new TileMap("C:/Users/Jaakko/Desktop/terrain_atlas.png", 32));
+
+            buttons = new List<TileButton>();
+            //Create tile buttons
             for (int i = 0; i < level.Maps.Count; i++)
             {
                 List<Image> images = level.Maps[i].SliceTileMap();
-                buttons = new List<TileButton>();
                 for (int j = 0; j < images.Count; j++)
                 {
-                    TileButton tileButton = new TileButton(j, i, images[j]);
-                    tileButton.Width = 40;
-                    tileButton.Height = 40;
+                    TileButton tileButton = new TileButton(j, i, images[j])
+                    {
+                        Width = 40,
+                        Height = 40
+                    };
                     tileButton.Click += TileSelection;
                     buttons.Add(tileButton);
                 }
             }
-            SetButtons();
+            level.Layers[0].AddTile(new Tile(gridW - 1, gridH - 1, (Bitmap)level.Maps[0].SliceTileMap()[0]));
+            SetTileButtons();
+
+            eraseSelection = new CheckBox()
+            {
+                Text = "Erase",
+                Location = new Point(10, panel3.Location.Y - 25)
+            };
+            panel2.Controls.Add(eraseSelection);
             panel1.Invalidate();
         }
 
-        void SetButtons()
+        /// <summary>
+        /// Set tile buttons
+        /// </summary>
+        void SetTileButtons()
         {
             if (level == null)
                 return;
+            int j = 0;
             for (int i = 0; i < level.Maps.Count; i++)
             {
                 int tileId = 0;
-                int l = 0;
-                for (; ; l++)
+                for (; ; j++)
                 {
                     if (tileId >= buttons.Count)
                         break;
@@ -109,15 +129,21 @@ namespace DnDTable
                     {
                         if (tileId >= buttons.Count)
                             break;
-                        buttons[tileId].Location = new Point(k * 40, l * 40 - vScrollBar2.Value);
+                        buttons[tileId].Location = new Point(k * 40, j * 40 - vScrollBar2.Value);
                         panel3.Controls.Add(buttons[tileId]);
                         tileId++;
                     }
                 }
-                vScrollBar2.Maximum = l * 30;
+                j++;
             }
+                vScrollBar2.Maximum = j * 30;
         }
 
+        /// <summary>
+        /// Selects a tile
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TileSelection(object sender, EventArgs e)
         {
             TileButton button = (TileButton)sender;
@@ -159,12 +185,14 @@ namespace DnDTable
         Button InitializeButton(Panel panel, int position, string buttonText, int offSet)
         {
 
-            Button button = new Button();
-            button.Text = buttonText;
-            button.Font = new Font(FontFamily.GenericMonospace, 10);
+            Button button = new Button
+            {
+                Text = buttonText,
+                Font = new Font(FontFamily.GenericMonospace, 10),
+                Width = 100,
+                Height = 50
+            };
             button.Click += HandleButtonClick;
-            button.Width = 100;
-            button.Height = 50;
             button.Location = new Point(panel.Width / 3 * position - button.Width / 2 + offSet, button.Height / 2);
             return button;
         }
@@ -193,7 +221,7 @@ namespace DnDTable
         private void LevelEditor_Resize(object sender, EventArgs e)
         {
             AdjustSize();
-            SetButtons();
+            SetTileButtons();
             if (panel2 == null || newLevelButton == null || saveLevelButton == null || loadLevelButton == null)
                 return;
             if (panel2.Width < newLevelButton.Width + saveLevelButton.Width + 100)
@@ -214,6 +242,10 @@ namespace DnDTable
                 loadLevelButton.Location = new Point(panel2.Width - loadLevelButton.Width / 2 - 75, loadLevelButton.Height / 2);
                 newLevelButton.Location = new Point(panel2.Width / 3 - newLevelButton.Width / 2 - 65, newLevelButton.Height / 2);
             }
+            cam.FovX = (panel1.Width - panel1.Width/10) / tileSize;
+            cam.FovY = (panel1.Height - panel1.Height/8) / tileSize;
+            hScrollBar1.Maximum = gridW + (panel1.Width / tileSize);
+            vScrollBar1.Maximum = gridH + (panel1.Height/ tileSize);
         }
 
         /// <summary>
@@ -229,6 +261,8 @@ namespace DnDTable
             panel3.Width = panel2.Width - vScrollBar2.Width;
             panel3.Height = panel2.Height / 3;
             panel3.Location = new Point(0, panel2.Height - panel3.Height - 50);
+            if(eraseSelection != null)
+                eraseSelection.Location = new Point(10, panel3.Location.Y - 25);
         }
 
         /// <summary>
@@ -249,7 +283,7 @@ namespace DnDTable
             System.GC.Collect();
         }
 
-        private void panel1_MouseMove(object sender, MouseEventArgs e)
+        private void Panel1_MouseMove(object sender, MouseEventArgs e)
         {
             Point pos = new Point(e.X, e.Y);
             if (level == null)
@@ -293,13 +327,18 @@ namespace DnDTable
             GC.Collect();
         }
 
-        private void panel1_MouseClick(object sender, MouseEventArgs e)
+        private void Panel1_MouseClick(object sender, MouseEventArgs e)
         {
             if(e.Button == MouseButtons.Left && selectedTile != null)
             {
                 if(selectedImage == null)
                 {
                     MessageBox.Show("You haven't selected a tile");
+                    return;
+                }
+                if (eraseSelection.Checked)
+                {
+                    selectedTile.Erase();
                     return;
                 }
                 Tile newTile = new Tile(selectedTile.X, selectedTile.Y, (Bitmap)selectedImage);
@@ -311,9 +350,9 @@ namespace DnDTable
             }
         }
 
-        private void vScrollBar2_Scroll(object sender, ScrollEventArgs e)
+        private void TileScollBarScroll(object sender, ScrollEventArgs e)
         {
-            SetButtons();
+            SetTileButtons();
         }
     }
 }

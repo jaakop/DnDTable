@@ -21,6 +21,7 @@ namespace GameEngine.Level
             x = X;
             y = Y;
         }
+
         /// <summary>
         /// A Tile Object
         /// </summary>
@@ -33,6 +34,7 @@ namespace GameEngine.Level
             y = Y;
             image = Image;
         }
+
         /// <summary>
         /// Draws the tile
         /// </summary>
@@ -46,6 +48,7 @@ namespace GameEngine.Level
             g.DrawImage(image, x * (size), y * (size), size, size);
             
         }
+
         /// <summary>
         /// Draws the tile
         /// </summary>
@@ -61,6 +64,7 @@ namespace GameEngine.Level
             g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             g.DrawImage(image, X * (size + OffSet), Y * (size + OffSet), size + 1, size + 1);
         }
+
         /// <summary>
         /// Draws the wireframe of the tile
         /// </summary>
@@ -70,6 +74,7 @@ namespace GameEngine.Level
         {
             g.DrawRectangle(Pens.Black, x * size, y * size, size, size);
         }
+
         /// <summary>
         /// Draws the wireframe of the tile
         /// </summary>
@@ -82,6 +87,7 @@ namespace GameEngine.Level
         {
             g.DrawRectangle(Pens.Black, X * (size + OffSet), Y * (size + OffSet), size, size);
         }
+
         /// <summary>
         /// Highlights the tile
         /// </summary>
@@ -112,10 +118,20 @@ namespace GameEngine.Level
             }
             g.DrawRectangle(Pens.Black, X * size, Y * size, size, size);
         }
+
+        /// <summary>
+        /// Erases the image of the tile
+        /// </summary>
+        public void Erase()
+        {
+            image = null;
+        }
+
         /// <summary>
         /// The X coordinate of the tile
         /// </summary>
         public int X { get => x; }
+
         /// <summary>
         /// The Y coordinate of the tile
         /// </summary>
