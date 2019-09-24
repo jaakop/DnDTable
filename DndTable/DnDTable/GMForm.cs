@@ -8,41 +8,61 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using GameEngine;
+using GameEngine.Level;
 
 namespace DnDTable
 {
     public partial class GMForm : Form
     {
-        GameForm game;
-        public GMForm()
+        GameForm gameForm;
+        MainMenuFrom mainMenu;
+
+        public GMForm(GameForm game, MainMenuFrom main)
         {
             InitializeComponent();
-            for(int i = 0; i < Screen.AllScreens.Length; i++)
+            gameForm = game;
+            mainMenu = main;
+            FormClosed += delegate
             {
-                ScreenCom.Items.Add(i + 1);
+                gameForm.Close();
+                main.Show();
+            };
+        }
+
+        private void BrowseButton_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFile = new OpenFileDialog();
+            if(openFile.ShowDialog() == DialogResult.OK)
+            {
+                levelPath.Text = openFile.FileName;
             }
         }
 
-        private void NewGameClick(object sender, EventArgs e)
+        private void LoadLevelButton_Click(object sender, EventArgs e)
         {
-            if (ScreenCom.SelectedIndex == -1)
-                return;
-            game = new GameForm(Screen.AllScreens[ScreenCom.SelectedIndex]);
-            game.Show();
-            Focus();
-            Width = 1400;
-            Height = 800;
-            CenterToScreen();
-            Controls.Clear();
+            try
+            {
+                Level lvl = FileHandler.LoadLevel(levelPath.Text);
+                lvl.Name = (levelCombo.Items.Count + 1).ToString();
+                levelCombo.Items.Add(lvl);
+                levelCombo.DisplayMember = "Name";
+                levelPath.Text = "";
+            }
+            catch
+            {
+                MessageBox.Show("Something went wrong when loading the level");
+            }
         }
 
-        private void LevelEditorButton_Click(object sender, EventArgs e)
+        private void DrawLevelButton_Click(object sender, EventArgs e)
         {
-            Hide();
-            LevelEditor editor = new LevelEditor();
-            editor.FormClosed += delegate { Show(); };
-            editor.ShowDialog();
+            if (levelCombo.SelectedItem == null)
+                return;
+            bool returnValue = gameForm.LoadLevel((Level)levelCombo.SelectedItem);
+            if (!returnValue)
+            { 
+                MessageBox.Show("Something went wrong with loading the level \n (Most probably you have moved the image file c:)");
+            }
         }
     }
 }

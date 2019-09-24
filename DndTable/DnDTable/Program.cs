@@ -16,7 +16,7 @@ namespace DnDTable
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new GMForm());
+            Application.Run(new MainMenuFrom());
         }
     }
 }

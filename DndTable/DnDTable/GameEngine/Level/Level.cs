@@ -82,5 +82,6 @@ namespace GameEngine.Level
 
         public List<TileMap> Maps { get => maps; set => maps = value; }
 
+        public string Name { get; set; }
     }
 }
