@@ -31,9 +31,13 @@ namespace DnDTable
             GameForm game = new GameForm(Screen.AllScreens[ScreenCom.SelectedIndex]);
             game.Show();
             GMForm gM = new GMForm(game, this);
-            gM.Show();
-            gM.Focus();
-            Hide();
+            try
+            {
+                gM.Show();
+                gM.Focus();
+                Hide();
+            }
+            catch { }
         }
 
         private void LevelEditorButton_Click(object sender, EventArgs e)
@@ -42,6 +46,28 @@ namespace DnDTable
             LevelEditor editor = new LevelEditor();
             editor.FormClosed += delegate { Show(); };
             editor.ShowDialog();
+        }
+
+        private void LoadGameButton_Click(object sender, EventArgs e)
+        {
+                if (ScreenCom.SelectedIndex == -1)
+                    return;
+            GameSelection gameSelection = new GameSelection();
+            gameSelection.ShowDialog();
+            if(gameSelection.DialogResult == DialogResult.OK)
+            {
+
+                GameForm game = new GameForm(Screen.AllScreens[ScreenCom.SelectedIndex]);
+                game.Show();
+                GMForm gM = new GMForm(game, this, gameSelection.GameID);
+                try
+                {
+                    gM.Show();
+                    gM.Focus();
+                    Hide();
+                }
+                catch { }
+            }
         }
     }
 }

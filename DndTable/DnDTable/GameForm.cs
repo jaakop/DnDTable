@@ -24,6 +24,7 @@ namespace DnDTable
             
             Rectangle bounds = screen.Bounds;
             Bounds = bounds;
+            
         }
 
         private void GameForm_Paint(object sender, PaintEventArgs e)

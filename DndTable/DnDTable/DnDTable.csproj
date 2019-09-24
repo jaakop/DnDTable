@@ -70,6 +70,11 @@
     <Compile Include="AddTileForm.Designer.cs">
       <DependentUpon>AddTileForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="DnDDataBaseDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DnDDataBaseDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="GameEngine\Editor\Camera.cs" />
     <Compile Include="GameEngine\Character.cs" />
     <Compile Include="GameEngine\Editor\Minimap.cs" />
@@ -86,6 +91,18 @@
     </Compile>
     <Compile Include="GameForm.Designer.cs">
       <DependentUpon>GameForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GameSelection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GameSelection.Designer.cs">
+      <DependentUpon>GameSelection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NameForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NameForm.Designer.cs">
+      <DependentUpon>NameForm.cs</DependentUpon>
     </Compile>
     <Compile Include="GMForm.cs">
       <SubType>Form</SubType>
@@ -113,6 +130,12 @@
     <EmbeddedResource Include="GameForm.resx">
       <DependentUpon>GameForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GameSelection.resx">
+      <DependentUpon>GameSelection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NameForm.resx">
+      <DependentUpon>NameForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GMForm.resx">
       <DependentUpon>GMForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -132,6 +155,17 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="DnDDataBaseDataSet.xsc">
+      <DependentUpon>DnDDataBaseDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DnDDataBaseDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DnDDataBaseDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DnDDataBaseDataSet.xss">
+      <DependentUpon>DnDDataBaseDataSet.xsd</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -160,6 +194,15 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DnDDataBase.mdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DnDDataBase_log.ldf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>DnDDataBase.mdf</DependentUpon>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
