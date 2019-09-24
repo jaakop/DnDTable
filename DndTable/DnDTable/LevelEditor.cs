@@ -34,7 +34,7 @@ namespace DnDTable
 
         Camera cam;
         Level level;
-        
+
         Tile selectedTile;
 
         Image selectedImage;
@@ -137,13 +137,8 @@ namespace DnDTable
             addMapButton.Click += AddTileMapButtonClick;
             panel2.Controls.Add(addMapButton);
 
-            Graphics minimapG = panel2.CreateGraphics();
-            minimapG.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            for (int i = 0; i < 5; i++)
-            {
-                minimapG.DrawImage(Minimap.DrawMinimap(level, gridW, gridH, tileSize, tileSize), 15, eraseSelection.Location.Y - (gridW * 6 / 2), gridW * 5, gridH * 5);
-            }
-            minimapG.DrawRectangle(Pens.Black, 10, eraseSelection.Location.Y - (gridW * 6 / 2) - 5, gridW * 5 + 5, gridH * 5 + 5);
+
+            DrawMiniMap();
 
             panel1.Invalidate();
         }
@@ -157,17 +152,17 @@ namespace DnDTable
         public void AddTileMap(string path, int size)
         {
             TileMap map = new TileMap(path, size);
-            
-                List<Image> images = map.SliceTileMap();
-                for (int j = 0; j < images.Count; j++)
+
+            List<Image> images = map.SliceTileMap();
+            for (int j = 0; j < images.Count; j++)
+            {
+                TileButton tileButton = new TileButton(j, level.Maps.Count, images[j])
                 {
-                    TileButton tileButton = new TileButton(j, level.Maps.Count, images[j])
-                    {
-                        Width = 40,
-                        Height = 40
-                    };
-                    tileButton.Click += TileSelection;
-                    buttons.Add(tileButton);
+                    Width = 40,
+                    Height = 40
+                };
+                tileButton.Click += TileSelection;
+                buttons.Add(tileButton);
             }
             level.AddAMap(map);
             SetTileButtons();
@@ -205,7 +200,7 @@ namespace DnDTable
             }
 
             int j = 0;
-                int tileId = 0;
+            int tileId = 0;
             for (int i = 0; i < level.Maps.Count; i++)
             {
                 for (; ; j++)
@@ -304,7 +299,13 @@ namespace DnDTable
             {
                 level = new Level();
                 AddNewLayer();
+
+                DrawMiniMap();
+
+                panel1.Invalidate();
+
             }
+
             else if (sender == loadLevelButton)
             {
                 OpenFileDialog openFile = new OpenFileDialog();
@@ -313,6 +314,7 @@ namespace DnDTable
                 {
                     Level newLevel = FileHandler.LoadLevel(openFile.FileName);
                     level = newLevel;
+
                     for (int i = 0; i < level.Maps.Count; i++)
                     {
                         TileMap map = level.Maps[i];
@@ -320,7 +322,7 @@ namespace DnDTable
                         List<Image> images = map.SliceTileMap();
                         for (int j = 0; j < images.Count; j++)
                         {
-                            TileButton tileButton = new TileButton(j, level.Maps.Count, images[j])
+                            TileButton tileButton = new TileButton(j, i, images[j])
                             {
                                 Width = 40,
                                 Height = 40
@@ -329,25 +331,70 @@ namespace DnDTable
                             buttons.Add(tileButton);
                         }
                     }
+
                     SetTileButtons();
-                    foreach(Layer layer in level.Layers)
+
+                    foreach (Layer layer in level.Layers)
                     {
-                        foreach(Tile tile in layer.Tiles)
+                        foreach (Tile tile in layer.Tiles)
                         {
                             tile.LoadImage(level.Maps);
                         }
                     }
+
+                    for (int i = 0; i < gridW; i++)
+                    {
+                        for (int j = 0; j < gridH; j++)
+                        {
+                            foreach (Layer layer in level.Layers)
+                            {
+                                Tile newTile = null;
+                                foreach (Tile tile in layer.Tiles)
+                                {
+                                    if (tile.X == i && tile.Y == j)
+                                    {
+                                        newTile = tile;
+                                    }
+                                }
+                                if (newTile != null)
+                                {
+                                    continue;
+                                }
+
+                                newTile = new Tile(i, j);
+                                layer.AddTile(newTile);
+                            }
+
+
+                        }
+                    }
+
+                    layerSelection.Maximum = level.Layers.Count;
+
+                    DrawMiniMap();
+
                     panel1.Invalidate();
+
                 }
             }
+
             else if (sender == saveLevelButton)
             {
                 SaveFileDialog saveFile = new SaveFileDialog();
-                if(saveFile.ShowDialog() == DialogResult.OK)
+                if (saveFile.ShowDialog() == DialogResult.OK)
                 {
                     FileHandler.SaveLevel(level, saveFile.FileName);
                 }
             }
+        }
+
+        void DrawMiniMap()
+        {
+            Graphics minimapG = panel2.CreateGraphics();
+            minimapG.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            minimapG.FillRectangle(new Pen(panel2.BackColor).Brush, 15, eraseSelection.Location.Y - (gridW * 6 / 2), gridW * 5, gridH * 5);
+            minimapG.DrawImage(Minimap.DrawMinimap(level, gridW, gridH, tileSize, tileSize), 15, eraseSelection.Location.Y - (gridW * 6 / 2), gridW * 5, gridH * 5);
+            minimapG.DrawRectangle(Pens.Black, 10, eraseSelection.Location.Y - (gridW * 6 / 2) - 5, gridW * 5 + 5, gridH * 5 + 5);
         }
 
         private void LevelEditor_Resize(object sender, EventArgs e)
@@ -365,7 +412,7 @@ namespace DnDTable
                 loadLevelButton.Location = new Point(panel2.Width / 2 - loadLevelButton.Width / 2, loadLevelButton.Height + loadLevelButton.Height / 2);
                 newLevelButton.Location = new Point(panel2.Width / 2 - newLevelButton.Width / 2, newLevelButton.Height / 2);
 
-                layerSelection.Location = new Point(layerSelection.Location.X ,4 * saveLevelButton.Height);
+                layerSelection.Location = new Point(layerSelection.Location.X, 4 * saveLevelButton.Height);
                 newLayerButton.Location = new Point(newLayerButton.Location.X, 4 * saveLevelButton.Height);
                 deleteLayerButton.Location = new Point(deleteLayerButton.Location.X, 4 * saveLevelButton.Height);
             }
@@ -493,11 +540,8 @@ namespace DnDTable
                 }
 
             }
-                Graphics minimapG = panel2.CreateGraphics();
-                minimapG.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-                minimapG.FillRectangle(new Pen(panel2.BackColor).Brush, 15, eraseSelection.Location.Y - (gridW * 6 / 2), gridW * 5, gridH * 5);
-                    minimapG.DrawImage(Minimap.DrawMinimap(level, gridW, gridH, tileSize, tileSize), 15, eraseSelection.Location.Y - (gridW * 6 / 2), gridW * 5, gridH * 5);
-                minimapG.DrawRectangle(Pens.Black, 10, eraseSelection.Location.Y - (gridW * 6 / 2) - 5, gridW * 5 + 5, gridH * 5 + 5);
+
+            DrawMiniMap();
         }
 
         private void TileScollBarScroll(object sender, ScrollEventArgs e)
