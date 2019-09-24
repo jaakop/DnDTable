@@ -8,8 +8,17 @@ namespace GameEngine.Level
     public class Tile
     {
         Bitmap image;
+
         int x;
         int y;
+
+        int tileId;
+        int mapId;
+
+        public Tile()
+        {
+
+        }
 
         /// <summary>
         /// A Tile Object
@@ -32,6 +41,23 @@ namespace GameEngine.Level
         {
             x = X;
             y = Y;
+            image = Image;
+        }
+
+        /// <summary>
+        /// A Tile Object
+        /// </summary>
+        /// <param name="X">The X coordinate of the Tile</param>
+        /// <param name="Y">The Y coordinate of the Tile</param>
+        /// <param name="Image">The image of the Tile</param>
+        public Tile(int X, int Y, int TileID, int MapID, Bitmap Image)
+        {
+            x = X;
+            y = Y;
+
+            tileId = TileID;
+            mapId = MapID;
+
             image = Image;
         }
 
@@ -89,37 +115,6 @@ namespace GameEngine.Level
         }
 
         /// <summary>
-        /// Highlights the tile
-        /// </summary>
-        /// <param name="g">Graphics to draw the highlight to</param>
-        /// <param name="X">The X coordinate to draw to</param>
-        /// <param name="Y">The Y coordinate to draw to</param>
-        /// <param name="size">The size of the drawn tile</param>
-        /// <param name="highlight">Is the tile highlighted or not</param>
-        public void HighLight(Graphics g, int X, int Y, int size, bool highlight)
-        {
-            if (!highlight)
-            {
-                g.FillRectangle(Brushes.White, new Rectangle(X * size, Y * size, size + 1, size + 1));
-            }
-            if (image != null)
-            {
-                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-                g.DrawImage(image, X * (size), Y * (size), size + 1, size + 1);
-            }
-            else
-            {
-                g.FillRectangle(Brushes.White, new Rectangle(X * size, Y * size, size + 1, size + 1));
-            }
-            if (highlight)
-            {
-                SolidBrush brush = new SolidBrush(Color.FromArgb(50, Color.LightBlue));
-                g.FillRectangle(brush, new Rectangle(X * size, Y * size, size + 1, size + 1));
-            }
-            g.DrawRectangle(Pens.Black, X * size, Y * size, size, size);
-        }
-
-        /// <summary>
         /// Erases the image of the tile
         /// </summary>
         public void Erase()
@@ -127,14 +122,28 @@ namespace GameEngine.Level
             image = null;
         }
 
+        public void LoadImage(List<TileMap> maps)
+        {
+            image = (Bitmap)maps[MapId].SliceTileMap()[TileId];
+        }
+
+        public void PrepareForSaving()
+        {
+            image = null;
+        }
+
         /// <summary>
         /// The X coordinate of the tile
         /// </summary>
-        public int X { get => x; }
+        public int X { get => x; set => x = value; }
 
         /// <summary>
         /// The Y coordinate of the tile
         /// </summary>
-        public int Y { get => y; }
+        public int Y { get => y; set => y = value; }
+
+        public Image Image { get => image; }
+        public int TileId { get => tileId; set => tileId = value; }
+        public int MapId { get => mapId; set => mapId = value; }
     }
 }

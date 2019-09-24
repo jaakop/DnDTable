@@ -19,6 +19,15 @@ namespace GameEngine.Level
             layers = new List<Layer>();
             maps = new List<TileMap>();
         }
+        /// <summary>
+        /// A Level Object
+        /// </summary>
+        public Level(List<Layer> layerList, List<TileMap> mapList)
+        {
+            layers = layerList;
+            maps = mapList;
+        }
+
 
         /// <summary>
         /// Add a layer to the lavel
@@ -50,12 +59,28 @@ namespace GameEngine.Level
             }
         }
 
+        public void PrepareForSaving()
+        {
+            foreach(Layer layer in layers)
+            {
+                for (int i = 0; i < layer.Tiles.Count; i++)
+                {
+                    if(layer.Tiles[i].Image != null)
+                    {
+                        layer.Tiles[i].PrepareForSaving();
+                        continue;
+                    }
+                        layer.Tiles.RemoveAt(i);
+                }
+            }
+        }
+
         /// <summary>
         /// Returns the layer list of the level
         /// </summary>
-        public List<Layer> Layers { get => layers; }
+        public List<Layer> Layers { get => layers; set => layers = value; }
 
-        public List<TileMap> Maps { get => maps; }
+        public List<TileMap> Maps { get => maps; set => maps = value; }
 
     }
 }

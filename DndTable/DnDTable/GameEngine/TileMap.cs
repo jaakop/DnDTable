@@ -12,12 +12,20 @@ namespace GameEngine
     {
         string tileMapPath;
         int tileSize;
+        
+        public TileMap()
+        {
+
+        }
 
         public TileMap(string MapPath, int TileSize)
         {
             tileMapPath = MapPath;
             tileSize = TileSize;
         }
+
+        public string TileMapPath { get => tileMapPath; set => tileMapPath = value; }
+        public int TileSize { get => tileSize; set => tileSize = value; }
 
         /// <summary>
         /// Slices Images form a TileMap
@@ -30,14 +38,14 @@ namespace GameEngine
 
             List<Image> images = new List<Image>();
 
-            int tilesX = tilemap.Width / tileSize;
-            int tilesY = tilemap.Height / tileSize;
+            int tilesX = tilemap.Width / TileSize;
+            int tilesY = tilemap.Height / TileSize;
 
             for (int j = 0; j < tilesY; j++)
             {
                 for (int i = 0; i < tilesX; i++)
                 {
-                    Image image = tilemap.Clone(new Rectangle(i * tileSize, j * tileSize, tileSize, tileSize), format);
+                    Image image = tilemap.Clone(new Rectangle(i * TileSize, j * TileSize, TileSize, TileSize), format);
                     images.Add(image);
                 }
             }
@@ -47,7 +55,7 @@ namespace GameEngine
 
         Image GetImage()
         {
-            return Image.FromFile(@tileMapPath);
+            return Image.FromFile(TileMapPath);
         }
     }
 }

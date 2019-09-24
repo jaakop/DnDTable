@@ -6,7 +6,7 @@ namespace GameEngine.Level
 {
     public class Layer
     {
-        List<Tile> tiles;
+        List<GameEngine.Level.Tile> tiles;
         /// <summary>
         /// A layer witch contains tiles
         /// </summary>
@@ -14,11 +14,20 @@ namespace GameEngine.Level
         {
             tiles = new List<Tile>();
         }
+
+        /// <summary>
+        /// A layer witch contains tiles
+        /// </summary>
+        public Layer(List<GameEngine.Level.Tile> tileList)
+        {
+            tiles = tileList;
+        }
+
         /// <summary>
         /// Adds a tile
         /// </summary>
         /// <param name="tileToAdd">Tile to be added to the list (if tiles exist there it will be replaced)</param>
-        public void AddTile(Tile tileToAdd)
+        public void AddTile(GameEngine.Level.Tile tileToAdd)
         {
             int i = 0;
             foreach(Tile tile in tiles)
@@ -32,9 +41,10 @@ namespace GameEngine.Level
             }
             tiles.Add(tileToAdd);
         }
+
         /// <summary>
         /// Returns the tile list of the layer
         /// </summary>
-        public List<Tile> Tiles { get => tiles; }
+        public List<GameEngine.Level.Tile> Tiles { get => tiles; }
     }
 }

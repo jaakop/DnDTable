@@ -25,6 +25,7 @@ namespace GameEngine.Editor
             x = 0;
             y = 0;
         }
+
         /// <summary>
         /// Camera Object
         /// </summary>
@@ -50,6 +51,7 @@ namespace GameEngine.Editor
             x = X;
             y = Y;
         }
+
         /// <summary>
         /// Move the camera to a new position
         /// </summary>
@@ -59,6 +61,7 @@ namespace GameEngine.Editor
             x = newPoint.X;
             y = newPoint.Y;
         }
+
         /// <summary>
         /// Returns the location of the camera as a Point
         /// </summary>

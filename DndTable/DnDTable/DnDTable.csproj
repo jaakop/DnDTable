@@ -49,11 +49,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddTileForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddTileForm.Designer.cs">
+      <DependentUpon>AddTileForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="GameEngine\Editor\Camera.cs" />
     <Compile Include="GameEngine\Character.cs" />
+    <Compile Include="GameEngine\Editor\Minimap.cs" />
     <Compile Include="GameEngine\Editor\TileButton.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="GameEngine\Level\FileHandler.cs" />
     <Compile Include="GameEngine\Level\Layer.cs" />
     <Compile Include="GameEngine\Level\Level.cs" />
     <Compile Include="GameEngine\Level\Tile.cs" />
@@ -78,6 +86,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AddTileForm.resx">
+      <DependentUpon>AddTileForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GameForm.resx">
       <DependentUpon>GameForm.cs</DependentUpon>
     </EmbeddedResource>
