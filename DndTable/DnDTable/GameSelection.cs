@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.SqlClient;
+using System.IO;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -15,8 +16,7 @@ namespace DnDTable
         public GameSelection()
         {
             InitializeComponent();
-
-            SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Admin\source\repos\jaakop\DnDTable\DndTable\DnDTable\DnDDataBase.mdf;Integrated Security=True");
+            SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename="+ Directory.GetCurrentDirectory() +@"\DnDDataBase.mdf;Integrated Security=True");
             connection.Open();
 
             SqlCommand command = new SqlCommand("SELECT * FROM Games", connection);
