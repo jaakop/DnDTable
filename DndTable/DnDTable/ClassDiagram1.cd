@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="GameEngine.Editor.Camera">
+    <Position X="7.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAwAIAAAAAAAAIAAAAAAAAAAAAAADBgAAAAAAA=</HashCode>
+      <FileName>GameEngine\Editor\Camera.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameEngine.Editor.Minimap">
+    <Position X="9.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAA=</HashCode>
+      <FileName>GameEngine\Editor\Minimap.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameEngine.Editor.TileButton">
+    <Position X="9.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAACAAAAAAAIAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameEngine\Editor\TileButton.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameEngine.Level.FileHandler">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>GameEngine\Level\FileHandler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameEngine.Level.Layer">
+    <Position X="3" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAAAAAAAAAAAAgAAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>GameEngine\Level\Layer.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="tiles" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="GameEngine.Level.Level">
+    <Position X="5.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAIAAEAQAAAAAAGAEAAAABACAAAA=</HashCode>
+      <FileName>GameEngine\Level\Level.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="layers" />
+      <Field Name="maps" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="GameEngine.Level.Tile">
+    <Position X="5.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgIAAAACAAAAAAAIAAAAGAAAATAAAQBgAAAAYAA=</HashCode>
+      <FileName>GameEngine\Level\Tile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameEngine.TileMap">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACQAAAAkAAAAAAAAQAAAAAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>GameEngine\TileMap.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
