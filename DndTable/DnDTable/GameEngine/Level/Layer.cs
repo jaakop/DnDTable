@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
+/// @author  Jaakko Sukuvaara
+/// @version 2020
 namespace GameEngine.Level
 {
+    /// <summary>
+    /// Level layer
+    /// </summary>
     public class Layer
     {
-        List<GameEngine.Level.Tile> tiles;
+        private List<GameEngine.Level.Tile> tiles;
+
         /// <summary>
         /// A layer witch contains tiles
         /// </summary>
