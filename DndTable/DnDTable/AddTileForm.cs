@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 
 /// @author  Jaakko Sukuvaara
-/// @version Q4 2020
+/// @version 2020
 namespace DnDTable
 {
     /// <summary>
@@ -10,8 +10,8 @@ namespace DnDTable
     /// </summary>
     public partial class AddTileForm : Form
     {
-        LevelEditor levelEditor;
-        string filePath;
+        private LevelEditor levelEditor;
+        private string filePath;
 
         /// <summary>
         /// New TileForm
