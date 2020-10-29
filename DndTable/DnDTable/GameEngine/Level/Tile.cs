@@ -1,24 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Windows.Forms;
+
+/// @author  Jaakko Sukuvaara
+/// @version 2020
 namespace GameEngine.Level
 {
+    /// <summary>
+    /// Tile
+    /// </summary>
     public class Tile
     {
-        Bitmap image;
+        private Bitmap image;
 
-        int x;
-        int y;
+        private int x;
+        private int y;
 
-        int tileId;
-        int mapId;
+        private int tileId;
+        private int mapId;
 
-        public Tile()
-        {
-
-        }
+        /// <summary>
+        /// A Tile Object
+        /// </summary>
+        public Tile() {}
 
         /// <summary>
         /// A Tile Object
@@ -122,11 +125,18 @@ namespace GameEngine.Level
             image = null;
         }
 
+        /// <summary>
+        /// Load image to tile
+        /// </summary>
+        /// <param name="maps"></param>
         public void LoadImage(List<TileMap> maps)
         {
             image = (Bitmap)maps[MapId].SliceTileMap()[TileId];
         }
 
+        /// <summary>
+        /// Prepare tile for saving
+        /// </summary>
         public void PrepareForSaving()
         {
             image = null;
@@ -142,8 +152,17 @@ namespace GameEngine.Level
         /// </summary>
         public int Y { get => y; set => y = value; }
 
+        /// <summary>
+        /// Tile Image
+        /// </summary>
         public Image Image { get => image; }
+        /// <summary>
+        /// Tile id
+        /// </summary>
         public int TileId { get => tileId; set => tileId = value; }
+        /// <summary>
+        /// TileMap id
+        /// </summary>
         public int MapId { get => mapId; set => mapId = value; }
     }
 }
