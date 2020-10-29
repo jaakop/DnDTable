@@ -8,7 +8,7 @@ using GameEngine.Level;
 namespace DnDTable
 {
     /// <summary>
-    /// Form from where the game itself is to be played
+    /// Form from where the game itself is drawn toaa
     /// </summary>
     public partial class GameForm : Form
     {
