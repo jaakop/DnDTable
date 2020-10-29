@@ -56,8 +56,12 @@ namespace DnDTable
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             panel1.Paint += Panel1_Paint;
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer, true);
-            AddNewLayer();
-            DrawMiniMap();
+            cam = new Camera(5, 3, 14, 10)
+            {
+                FovX = (panel1.Width - panel1.Width / 20) / 75,
+                FovY = (panel1.Height - panel1.Height / 20) / 75
+            };
+            level = new Level();
 
             //set scrollbar sizes
             hScrollBar1.Maximum = gridW + 5;
@@ -75,13 +79,6 @@ namespace DnDTable
             panel2.Controls.Add(saveLevelButton);
             panel2.Controls.Add(loadLevelButton);
 
-            //Set camera
-            cam = new Camera(5, 3, 14, 10)
-            {
-                FovX = (panel1.Width - panel1.Width / 20) / 75,
-                FovY = (panel1.Height - panel1.Height / 20) / 75
-            };
-            level = new Level();
 
             //Create tile buttons
             buttons = new List<TileButton>();
@@ -148,6 +145,9 @@ namespace DnDTable
             addMapButton.Location = new Point(eraseSelection.Location.X + eraseSelection.Width, panel3.Location.Y - 30);
             addMapButton.Click += AddTileMapButtonClick;
             panel2.Controls.Add(addMapButton);
+            
+            AddNewLayer();
+            DrawMiniMap();
 
             panel1.Invalidate();
         }
@@ -416,7 +416,7 @@ namespace DnDTable
                 return;
             }
 
-            foreach (Tile tile in level.Layers[(int)layerSelection.Value - 1].Tiles)
+            foreach (Tile tile in level.Layers[(int)layerSelection.Value].Tiles)
             {
                 int tileX = tile.X * tileSize - cam.Location().X * tileSize + cam.FovX / 2 * tileSize;
                 int tileY = tile.Y * tileSize - cam.Location().Y * tileSize + cam.FovY / 2 * tileSize;
@@ -463,7 +463,7 @@ namespace DnDTable
                 else
                 {
                     Tile newTile = new Tile(selectedTile.X, selectedTile.Y, selectedTileID, selectedMapID, (Bitmap)selectedImage);
-                    level.Layers[(int)layerSelection.Value - 1].AddTile(newTile);
+                    level.Layers[(int)layerSelection.Value].AddTile(newTile);
                     selectedTile = newTile;
 
                     panel1.Invalidate();
