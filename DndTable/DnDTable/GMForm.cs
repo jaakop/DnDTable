@@ -1,34 +1,36 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 using GameEngine.Level;
 
-/// @author  Jaakko Sukuvaara
-/// @version 2020
 namespace DnDTable
 {
-    /// <summary>
-    /// GMform where the game is controlled from
-    /// </summary>
     public partial class GMForm : Form
     {
-        private GameForm gameForm;
-        private MainMenuFrom mainMenu;
+        GameForm gameForm;
+        MainMenuFrom mainMenu;
 
-        private int gameID = -1;
+        int gameID = -1;
 
-        private string conString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Admin\source\repos\jaakop\DnDTable\DndTable\DnDTable\DnDDataBase.mdf;Integrated Security=True";
+        List<Note> notes;
 
-        /// <summary>
-        /// New GmForm
-        /// </summary>
-        /// <param name="game">Game to draw levels to</param>
-        /// <param name="main">Reference to mainmenu form</param>
+        int noteId = 0;
+
+        string conString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + Directory.GetCurrentDirectory() + @"\DnDDataBase.mdf;Integrated Security=True";
+
         public GMForm(GameForm game, MainMenuFrom main)
         {
             InitializeComponent();
+            notes = new List<Note>();
+            MessageIDText.Text = "0/0";
             gameForm = game;
             mainMenu = main;
             FormClosed += delegate
@@ -57,19 +59,14 @@ namespace DnDTable
                 Show();
                 Close();
             }
-
         }
 
-        /// <summary>
-        /// New GMForm
-        /// </summary>
-        /// <param name="game">Game to draw levels to</param>
-        /// <param name="main">Reference to mainmenu form</param>
-        /// <param name="GameID">GameId for an existing game</param>
         public GMForm(GameForm game, MainMenuFrom main, int GameID)
         {
 
             InitializeComponent();
+            notes = new List<Note>();
+            MessageIDText.Text = "0/0";
             gameForm = game;
             mainMenu = main;
             gameID = GameID;
@@ -115,11 +112,6 @@ namespace DnDTable
             connection.Close();
         }
 
-        /// <summary>
-        /// Handl BrowseButton click
-        /// </summary>
-        /// <param name="sender">sender</param>
-        /// <param name="e">event</param>
         private void BrowseButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFile = new OpenFileDialog();
@@ -129,11 +121,6 @@ namespace DnDTable
             }
         }
 
-        /// <summary>
-        /// Handl LoadLevelButton click
-        /// </summary>
-        /// <param name="sender">sender</param>
-        /// <param name="e">event</param>
         private void LoadLevelButton_Click(object sender, EventArgs e)
         {
             try
@@ -163,11 +150,6 @@ namespace DnDTable
             }
         }
 
-        /// <summary>
-        /// Handl DrawLevelButton click
-        /// </summary>
-        /// <param name="sender">sender</param>
-        /// <param name="e">event</param>
         private void DrawLevelButton_Click(object sender, EventArgs e)
         {
             if (levelCombo.SelectedItem == null)
@@ -179,20 +161,15 @@ namespace DnDTable
             }
         }
 
-        /// <summary>
-        /// Handl AddNoteButton click
-        /// </summary>
-        /// <param name="sender">sender</param>
-        /// <param name="e">event</param>
         private void AddNoteButton_Click(object sender, EventArgs e)
         {
-            if (NoteTextBox.Text.Length > 200)
+            if (NoteInputTextBox.Text.Length > 200)
             {
                 MessageBox.Show("Note is too long");
                 return;
             }
 
-            else if(NoteTextBox.Text.Trim() == "")
+            else if(NoteInputTextBox.Text.Trim() == "")
             {
                 MessageBox.Show("Don't even try...");
                 return;
@@ -202,7 +179,7 @@ namespace DnDTable
             connection.Open();
 
             SqlCommand command = new SqlCommand("INSERT INTO Notes (Content, GameID) VALUES (@content, @gameId)", connection);
-            command.Parameters.AddWithValue("@content", NoteTextBox.Text);
+            command.Parameters.AddWithValue("@content", NoteInputTextBox.Text);
             command.Parameters.AddWithValue("@gameId", gameID);
 
             command.ExecuteNonQuery();
@@ -210,49 +187,40 @@ namespace DnDTable
             command.Dispose();
             connection.Close();
 
-            AddANote(NoteTextBox.Text);
-            NoteTextBox.Text = "";
-            
+            AddANote(NoteInputTextBox.Text);
+            NoteInputTextBox.Text = "";
         }
-
-        /// <summary>
-        /// Adds a note to database
-        /// </summary>
-        /// <param name="txt">Note content</param>
         private void AddANote(string txt)
         {
-            Label note = new Label();
-            note.MaximumSize = new Size(NoteBox.Width - vScrollBar1.Width - 10, 0);
-            note.Text = txt;
-            note.Font = new Font(note.Font.FontFamily, 10, note.Font.Style);
-            note.AutoSize = true;
-            note.BorderStyle = BorderStyle.FixedSingle;
-            note.Location = new Point(5, NoteBox.Height - note.Height);
-            NoteBox.Controls.Add(note);
-            for (int i = 0; i < NoteBox.Controls.Count; i++)
-            {
-                NoteBox.Controls[i].Location = new Point(NoteBox.Controls[i].Location.X, NoteBox.Controls[i].Location.Y - note.Height - 10);
-            }
-            NoteBox.Invalidate();
-            
-            for (int i = 0; i < NoteBox.Controls.Count; i++)
-            {
-                vScrollBar1.Maximum += NoteBox.Controls[i].Height;
-            }
-            vScrollBar1.Value = vScrollBar1.Maximum;
+            Note note = new Note();
+            note.Id = notes.Count;
+            noteId = notes.Count;
+            note.Name = txt;
+            notes.Add(note);
+            NoteTextBox.Text = note.Name;
+
+            MessageIDText.Text = (noteId + 1) + "/" + notes.Count;
         }
 
-        /// <summary>
-        /// Handle notes scrollbar scrolling
-        /// </summary>
-        /// <param name="sender">sender</param>
-        /// <param name="e">event</param>
-        private void vScrollBar1_Scroll(object sender, ScrollEventArgs e)
+        private void NoteUpButton_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < NoteBox.Controls.Count; i++)
-            {
-                NoteBox.Controls[i].Location = new Point(NoteBox.Controls[i].Location.X, (vScrollBar1.Value * -1)- NoteBox.Controls[i].Height);
-            }
+            if(noteId + 1 < notes.Count)
+                noteId++;
+            NoteTextBox.Text = notes[noteId].Name;
+            MessageIDText.Text = (noteId + 1) + "/" + notes.Count;
         }
+
+        private void NoteDownButton_Click(object sender, EventArgs e)
+        {
+            if (noteId - 1 >= 0)
+                noteId--;
+            NoteTextBox.Text = notes[noteId].Name;
+            MessageIDText.Text = (noteId + 1) + "/" + notes.Count;
+        }
+    }
+    struct Note
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }

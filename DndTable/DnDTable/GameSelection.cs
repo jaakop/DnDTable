@@ -1,24 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.SqlClient;
+using System.IO;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
-/// @author  Jaakko Sukuvaara
-/// @version 2020
 namespace DnDTable
 {
-    /// <summary>
-    /// Form, from which is possible to select a game
-    /// </summary>
     public partial class GameSelection : Form
     {
-        /// <summary>
-        /// New GameSelection From
-        /// </summary>
         public GameSelection()
         {
             InitializeComponent();
-
-            SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Admin\source\repos\jaakop\DnDTable\DndTable\DnDTable\DnDDataBase.mdf;Integrated Security=True");
+            SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename="+ Directory.GetCurrentDirectory() +@"\DnDDataBase.mdf;Integrated Security=True");
             connection.Open();
 
             SqlCommand command = new SqlCommand("SELECT * FROM Games", connection);
@@ -38,28 +36,16 @@ namespace DnDTable
             comboBox1.DisplayMember = "Name";
         }
 
-        /// <summary>
-        /// *Handle Start button click
-        /// </summary>
-        /// <param name="sender">semder</param>
-        /// <param name="e">event</param>
+        public int GameID { get; set; }
+
         private void button1_Click(object sender, EventArgs e)
         {
             GameID = ((Game)comboBox1.SelectedItem).GameId;
             DialogResult = DialogResult.OK;
             Close();
         }
-
-        /// <summary>
-        /// ID of the game
-        /// </summary>
-        public int GameID { get; set; }
     }
-
-    /// <summary>
-    /// Game struct to hold GameID and Name
-    /// </summary>
-    public struct Game
+    struct Game
     {
         public int GameId { get; set; }
         public string Name { get; set; }

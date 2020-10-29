@@ -154,6 +154,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="DnDDataBaseDataSet.xsc">
       <DependentUpon>DnDDataBaseDataSet.xsd</DependentUpon>
     </None>
