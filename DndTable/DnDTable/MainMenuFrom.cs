@@ -1,20 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using GameEngine;
-
+/// @author  Jaakko Sukuvaara
+/// @version 2020
 namespace DnDTable
 {
+    /// <summary>
+    /// MainMenu form
+    /// </summary>
     public partial class MainMenuFrom : Form
     {
-        
+        /// <summary>
+        /// New main menu
+        /// </summary>
         public MainMenuFrom()
         {
             InitializeComponent();
@@ -24,6 +22,11 @@ namespace DnDTable
             }
         }
 
+        /// <summary>
+        /// Handle newGame button click
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">event</param>
         private void NewGameClick(object sender, EventArgs e)
         {
             if (ScreenCom.SelectedIndex == -1)
@@ -40,6 +43,11 @@ namespace DnDTable
             catch { }
         }
 
+        /// <summary>
+        /// Handle LevelEditor button click
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">event</param>
         private void LevelEditorButton_Click(object sender, EventArgs e)
         {
             Hide();
@@ -48,6 +56,11 @@ namespace DnDTable
             editor.ShowDialog();
         }
 
+        /// <summary>
+        /// Handle LoadGame button click
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">event</param>
         private void LoadGameButton_Click(object sender, EventArgs e)
         {
                 if (ScreenCom.SelectedIndex == -1)
