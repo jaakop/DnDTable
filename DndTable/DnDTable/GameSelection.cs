@@ -1,18 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data.SqlClient;
 using System.IO;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
+/// @author  Jaakko Sukuvaara
+/// @version 2020
 namespace DnDTable
 {
+    /// <summary>
+    /// GameSelection form
+    /// </summary>
     public partial class GameSelection : Form
     {
+        /// <summary>
+        /// New GameSelection form
+        /// </summary>
         public GameSelection()
         {
             InitializeComponent();
@@ -36,18 +38,37 @@ namespace DnDTable
             comboBox1.DisplayMember = "Name";
         }
 
-        public int GameID { get; set; }
-
+        /// <summary>
+        /// OK button click event
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">event</param>
         private void button1_Click(object sender, EventArgs e)
         {
             GameID = ((Game)comboBox1.SelectedItem).GameId;
             DialogResult = DialogResult.OK;
             Close();
         }
+
+        /// <summary>
+        /// Game Id
+        /// </summary>
+        public int GameID { get; set; }
+
     }
-    struct Game
+
+    /// <summary>
+    /// Game struct to hold Game data
+    /// </summary>
+    public struct Game
     {
+        /// <summary>
+        /// Game id
+        /// </summary>
         public int GameId { get; set; }
+        /// <summary>
+        /// Game name
+        /// </summary>
         public string Name { get; set; }
     }
 }

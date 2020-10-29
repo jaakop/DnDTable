@@ -1,31 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 
 using GameEngine.Level;
 
+/// @author  Jaakko Sukuvaara
+/// @version 2020
 namespace DnDTable
 {
+    /// <summary>
+    /// GMForm from which the game is controlled
+    /// </summary>
     public partial class GMForm : Form
     {
-        GameForm gameForm;
-        MainMenuFrom mainMenu;
+        private GameForm gameForm;
+        private MainMenuFrom mainMenu;
 
-        int gameID = -1;
+        private int gameID = -1;
+        private int noteId = 0;
 
-        List<Note> notes;
+        private List<Note> notes;
 
-        int noteId = 0;
+        private string conString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + Directory.GetCurrentDirectory() + @"\DnDDataBase.mdf;Integrated Security=True";
 
-        string conString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + Directory.GetCurrentDirectory() + @"\DnDDataBase.mdf;Integrated Security=True";
-
+        /// <summary>
+        /// New GMForm
+        /// </summary>
+        /// <param name="game">GameForm reference</param>
+        /// <param name="main">MainForm reference</param>
         public GMForm(GameForm game, MainMenuFrom main)
         {
             InitializeComponent();
@@ -61,6 +65,12 @@ namespace DnDTable
             }
         }
 
+        /// <summary>
+        /// New GMForm
+        /// </summary>
+        /// <param name="game">GameForm reference</param>
+        /// <param name="main">MainForm reference</param>
+        /// <param name="GameID">GameId for excisting game</param>
         public GMForm(GameForm game, MainMenuFrom main, int GameID)
         {
 
@@ -112,6 +122,11 @@ namespace DnDTable
             connection.Close();
         }
 
+        /// <summary>
+        /// BrowseButton click evemt
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">event</param>
         private void BrowseButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFile = new OpenFileDialog();
@@ -121,6 +136,11 @@ namespace DnDTable
             }
         }
 
+        /// <summary>
+        /// LoadLevelButton click evemt
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">event</param>
         private void LoadLevelButton_Click(object sender, EventArgs e)
         {
             try
@@ -150,6 +170,11 @@ namespace DnDTable
             }
         }
 
+        /// <summary>
+        /// DrawLevelButton click evemt
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">event</param>
         private void DrawLevelButton_Click(object sender, EventArgs e)
         {
             if (levelCombo.SelectedItem == null)
@@ -161,6 +186,11 @@ namespace DnDTable
             }
         }
 
+        /// <summary>
+        /// AddNoteButton click evemt
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">event</param>
         private void AddNoteButton_Click(object sender, EventArgs e)
         {
             if (NoteInputTextBox.Text.Length > 200)
@@ -190,6 +220,37 @@ namespace DnDTable
             AddANote(NoteInputTextBox.Text);
             NoteInputTextBox.Text = "";
         }
+
+        /// <summary>
+        /// NoteUpButton click evemt
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">event</param>
+        private void NoteUpButton_Click(object sender, EventArgs e)
+        {
+            if(noteId + 1 < notes.Count)
+                noteId++;
+            NoteTextBox.Text = notes[noteId].Name;
+            MessageIDText.Text = (noteId + 1) + "/" + notes.Count;
+        }
+
+        /// <summary>
+        /// NoteDownButto click evemt
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">event</param>
+        private void NoteDownButton_Click(object sender, EventArgs e)
+        {
+            if (noteId - 1 >= 0)
+                noteId--;
+            NoteTextBox.Text = notes[noteId].Name;
+            MessageIDText.Text = (noteId + 1) + "/" + notes.Count;
+        }
+
+        /// <summary>
+        /// Add a note
+        /// </summary>
+        /// <param name="txt">Note content</param>
         private void AddANote(string txt)
         {
             Note note = new Note();
@@ -201,26 +262,20 @@ namespace DnDTable
 
             MessageIDText.Text = (noteId + 1) + "/" + notes.Count;
         }
-
-        private void NoteUpButton_Click(object sender, EventArgs e)
-        {
-            if(noteId + 1 < notes.Count)
-                noteId++;
-            NoteTextBox.Text = notes[noteId].Name;
-            MessageIDText.Text = (noteId + 1) + "/" + notes.Count;
-        }
-
-        private void NoteDownButton_Click(object sender, EventArgs e)
-        {
-            if (noteId - 1 >= 0)
-                noteId--;
-            NoteTextBox.Text = notes[noteId].Name;
-            MessageIDText.Text = (noteId + 1) + "/" + notes.Count;
-        }
     }
-    struct Note
+
+    /// <summary>
+    /// Note struct to hold not info
+    /// </summary>
+    public struct Note
     {
+        /// <summary>
+        /// Note Id
+        /// </summary>
         public int Id { get; set; }
+        /// <summary>
+        /// Note Content
+        /// </summary>
         public string Name { get; set; }
     }
 }
