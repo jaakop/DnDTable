@@ -1,26 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data.SqlClient;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using GameEngine.Level;
 
+/// @author  Jaakko Sukuvaara
+/// @version 2020
 namespace DnDTable
 {
+    /// <summary>
+    /// GMform where the game is controlled from
+    /// </summary>
     public partial class GMForm : Form
     {
-        GameForm gameForm;
-        MainMenuFrom mainMenu;
+        private GameForm gameForm;
+        private MainMenuFrom mainMenu;
 
-        int gameID = -1;
+        private int gameID = -1;
 
-        string conString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Admin\source\repos\jaakop\DnDTable\DndTable\DnDTable\DnDDataBase.mdf;Integrated Security=True";
+        private string conString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Admin\source\repos\jaakop\DnDTable\DndTable\DnDTable\DnDDataBase.mdf;Integrated Security=True";
 
+        /// <summary>
+        /// New GmForm
+        /// </summary>
+        /// <param name="game">Game to draw levels to</param>
+        /// <param name="main">Reference to mainmenu form</param>
         public GMForm(GameForm game, MainMenuFrom main)
         {
             InitializeComponent();
@@ -55,6 +60,12 @@ namespace DnDTable
 
         }
 
+        /// <summary>
+        /// New GMForm
+        /// </summary>
+        /// <param name="game">Game to draw levels to</param>
+        /// <param name="main">Reference to mainmenu form</param>
+        /// <param name="GameID">GameId for an existing game</param>
         public GMForm(GameForm game, MainMenuFrom main, int GameID)
         {
 
@@ -104,6 +115,11 @@ namespace DnDTable
             connection.Close();
         }
 
+        /// <summary>
+        /// Handl BrowseButton click
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">event</param>
         private void BrowseButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFile = new OpenFileDialog();
@@ -113,6 +129,11 @@ namespace DnDTable
             }
         }
 
+        /// <summary>
+        /// Handl LoadLevelButton click
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">event</param>
         private void LoadLevelButton_Click(object sender, EventArgs e)
         {
             try
@@ -142,6 +163,11 @@ namespace DnDTable
             }
         }
 
+        /// <summary>
+        /// Handl DrawLevelButton click
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">event</param>
         private void DrawLevelButton_Click(object sender, EventArgs e)
         {
             if (levelCombo.SelectedItem == null)
@@ -153,6 +179,11 @@ namespace DnDTable
             }
         }
 
+        /// <summary>
+        /// Handl AddNoteButton click
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">event</param>
         private void AddNoteButton_Click(object sender, EventArgs e)
         {
             if (NoteTextBox.Text.Length > 200)
@@ -183,6 +214,11 @@ namespace DnDTable
             NoteTextBox.Text = "";
             
         }
+
+        /// <summary>
+        /// Adds a note to database
+        /// </summary>
+        /// <param name="txt">Note content</param>
         private void AddANote(string txt)
         {
             Label note = new Label();
@@ -206,6 +242,11 @@ namespace DnDTable
             vScrollBar1.Value = vScrollBar1.Maximum;
         }
 
+        /// <summary>
+        /// Handle notes scrollbar scrolling
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">event</param>
         private void vScrollBar1_Scroll(object sender, ScrollEventArgs e)
         {
             for (int i = 0; i < NoteBox.Controls.Count; i++)
