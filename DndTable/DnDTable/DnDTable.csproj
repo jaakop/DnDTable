@@ -76,7 +76,6 @@
       <DependentUpon>DnDDataBaseDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="GameEngine\Editor\Camera.cs" />
-    <Compile Include="GameEngine\Character.cs" />
     <Compile Include="GameEngine\Editor\Minimap.cs" />
     <Compile Include="GameEngine\Editor\TileButton.cs">
       <SubType>Component</SubType>
