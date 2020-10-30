@@ -112,8 +112,8 @@ namespace DnDTable
             {
                 Location = new Point(25, newLevelButton.Height * 2),
                 Width = 50,
-                Value = 1,
-                Minimum = 1,
+                Value = 0,
+                Minimum = 0,
                 Maximum = level.Layers.Count
             };
             newLayerButton = new Button()
