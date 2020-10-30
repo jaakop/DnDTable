@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
+using System.Collections.Generic;
 
 using GameEngine.Level;
 
@@ -46,14 +47,17 @@ namespace DnDTable
         /// <returns>True if succesfull</returns>
         public bool LoadLevel(Level lvl)
         {
+            Dictionary<int, List<Image>> maps = new Dictionary<int, List<Image>>();
             level = lvl;
             try
             {
+                for (int i = 0; i < level.Maps.Count; i++)
+                    maps.Add(i, level.Maps[i].SliceTileMap());
                 foreach (Layer layer in level.Layers)
                 {
                     foreach (Tile tile in layer.Tiles)
                     {
-                        tile.LoadImage(level.Maps);
+                        tile.LoadImage(maps);
                     }
                 }
                 Invalidate();
