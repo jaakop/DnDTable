@@ -128,10 +128,10 @@ namespace GameEngine.Level
         /// <summary>
         /// Load image to tile
         /// </summary>
-        /// <param name="maps"></param>
-        public void LoadImage(List<TileMap> maps)
+        /// <param name="maps">Dictionary of map ids and tile image lists</param>
+        public void LoadImage(Dictionary<int, List<Image>> maps)
         {
-            image = (Bitmap)maps[MapId].SliceTileMap()[TileId];
+            image = (Bitmap)maps[MapId][TileId];
         }
 
         /// <summary>

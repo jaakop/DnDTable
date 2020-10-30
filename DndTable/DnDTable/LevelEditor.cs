@@ -224,6 +224,7 @@ namespace DnDTable
             else if (sender == loadLevelButton)
             {
                 OpenFileDialog openFile = new OpenFileDialog();
+                Dictionary<int, List<Image>> maps = new Dictionary<int, List<Image>>();
 
                 if (openFile.ShowDialog() == DialogResult.OK)
                 {
@@ -233,8 +234,10 @@ namespace DnDTable
                     for (int i = 0; i < level.Maps.Count; i++)
                     {
                         TileMap map = level.Maps[i];
-
                         List<Image> images = map.SliceTileMap();
+
+                        maps.Add(i, images);
+
                         for (int j = 0; j < images.Count; j++)
                         {
                             TileButton tileButton = new TileButton(j, i, images[j])
@@ -253,7 +256,7 @@ namespace DnDTable
                     {
                         foreach (Tile tile in layer.Tiles)
                         {
-                            tile.LoadImage(level.Maps);
+                            tile.LoadImage(maps);
                         }
                     }
 
