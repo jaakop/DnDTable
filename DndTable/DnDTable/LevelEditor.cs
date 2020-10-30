@@ -146,6 +146,7 @@ namespace DnDTable
             addMapButton.Click += AddTileMapButtonClick;
             panel2.Controls.Add(addMapButton);
             
+            //Add default objects
             AddNewLayer();
             DrawMiniMap();
 
