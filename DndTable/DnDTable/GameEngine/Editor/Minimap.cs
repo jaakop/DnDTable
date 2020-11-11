@@ -40,8 +40,8 @@ namespace GameEngine.Editor
                     Bitmap image = new Bitmap(tileW, tileH);
                     Graphics graphics = Graphics.FromImage(image);
 
-                    for (int ImageId = 0; ImageId < tiles.Count; ImageId++)
-                        if (tiles[ImageId].Image != null) graphics.DrawImage(tiles[ImageId].Image, 0, 0, image.Width, image.Height);
+                    for (int imageId = 0; imageId < tiles.Count; imageId++)
+                        if (tiles[imageId].Image != null) graphics.DrawImage(tiles[imageId].Image, 0, 0, image.Width, image.Height);
 
                     Color pixel = GetPixel(image);
 
