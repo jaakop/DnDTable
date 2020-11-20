@@ -198,6 +198,7 @@ namespace DnDTable
         private void TileSelection(object sender, EventArgs e)
         {
             TileButton button = (TileButton)sender;
+            if (button.TileId >= buttons.Count) return;
             selectedImage = level.Maps[button.MapId].SliceTileMap()[button.TileId];
             selectedTileID = button.TileId;
             selectedMapID = button.MapId;
@@ -214,11 +215,11 @@ namespace DnDTable
             {
                 level = new Level();
                 AddNewLayer();
-
                 DrawMiniMap();
-
+                buttons.Clear();
+                layerSelection.Value = 0;
                 panel1.Invalidate();
-
+                SetTileButtons();
             }
 
             else if (sender == loadLevelButton)
@@ -287,8 +288,8 @@ namespace DnDTable
                         }
                     }
 
-                    layerSelection.Maximum = level.Layers.Count;
-
+                    layerSelection.Maximum = level.Layers.Count - 1;
+                    layerSelection.Value = 0;
                     DrawMiniMap();
 
                     panel1.Invalidate();
