@@ -392,7 +392,7 @@ namespace DnDTable
         /// <summary>
         /// Adjusts the size of the panels and position of buttons
         /// </summary>
-        void AdjustSize()
+        private void AdjustSize()
         {
             panel1.Width = Width / 4 * 3 - vScrollBar1.Width;
             panel2.Width = Width / 4;
@@ -552,7 +552,7 @@ namespace DnDTable
         /// <summary>
         /// Draw a minimap of the level
         /// </summary>
-        void DrawMiniMap()
+        private void DrawMiniMap()
         {
             Graphics minimapG = panel2.CreateGraphics();
             minimapG.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
@@ -569,7 +569,7 @@ namespace DnDTable
         /// <param name="buttonText">Text of the button</param>
         /// <param name="offSet">Offset for the button position</param>
         /// <returns></returns>
-        Button InitializeButton(Panel panel, int position, string buttonText, int offSet)
+        private Button InitializeButton(Panel panel, int position, string buttonText, int offSet)
         {
             Button button = new Button
             {
@@ -586,7 +586,7 @@ namespace DnDTable
         /// <summary>
         /// Set tile buttons
         /// </summary>
-        void SetTileButtons()
+        private void SetTileButtons()
         {
             if (level == null)
             {
