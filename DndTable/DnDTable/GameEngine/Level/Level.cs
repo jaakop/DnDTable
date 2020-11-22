@@ -79,7 +79,8 @@ namespace GameEngine.Level
                         layer.Tiles[i].PrepareForSaving();
                         continue;
                     }
-                        layer.Tiles.RemoveAt(i);
+                    layer.Tiles.RemoveAt(i);
+                    i--;
                 }
             }
         }
