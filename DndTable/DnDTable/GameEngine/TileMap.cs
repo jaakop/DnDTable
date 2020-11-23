@@ -33,6 +33,7 @@ namespace GameEngine
         /// TileMap Path
         /// </summary>
         public string TileMapPath { get => tileMapPath; set => tileMapPath = value; }
+
         /// <summary>
         /// Tile size
         /// </summary>

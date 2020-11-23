@@ -17,6 +17,7 @@ namespace DnDTable
         private int gridW = 32;
         private int gridH = 18;
         private int tileSize = 75;
+        private int tileButtonSize = 40;
 
         private int selectedTileID;
         private int selectedMapID;
@@ -90,8 +91,8 @@ namespace DnDTable
                 {
                     TileButton tileButton = new TileButton(j, i, images[j])
                     {
-                        Width = 40,
-                        Height = 40
+                        Width = tileButtonSize,
+                        Height = tileButtonSize
                     };
                     tileButton.Click += TileSelection;
                     buttons.Add(tileButton);
@@ -193,8 +194,8 @@ namespace DnDTable
         /// <summary>
         /// Selects a tile
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Tile button</param>
+        /// <param name="e">event</param>
         private void TileSelection(object sender, EventArgs e)
         {
             TileButton button = (TileButton)sender;
@@ -208,7 +209,7 @@ namespace DnDTable
         /// Handles the button presses
         /// </summary>
         /// <param name="sender">Button, which was pressed</param>
-        /// <param name="e"></param>
+        /// <param name="e">event</param>
         private void HandleButtonClick(object sender, EventArgs e)
         {
             if (sender == newLevelButton)
@@ -243,8 +244,8 @@ namespace DnDTable
                         {
                             TileButton tileButton = new TileButton(j, i, images[j])
                             {
-                                Width = 40,
-                                Height = 40
+                                Width = tileButtonSize,
+                                Height = tileButtonSize
                             };
                             tileButton.Click += TileSelection;
                             buttons.Add(tileButton);
@@ -523,8 +524,8 @@ namespace DnDTable
             {
                 TileButton tileButton = new TileButton(j, level.Maps.Count, images[j])
                 {
-                    Width = 40,
-                    Height = 40
+                    Width = tileButtonSize,
+                    Height = tileButtonSize
                 };
                 tileButton.Click += TileSelection;
                 buttons.Add(tileButton);
@@ -562,13 +563,13 @@ namespace DnDTable
         }
 
         /// <summary>
-        /// Initializes a default button
+        /// Initializes a default button (size of (100,50))
         /// </summary>
         /// <param name="panel">Panel, where the button belongs to</param>
         /// <param name="position">Button position</param>
         /// <param name="buttonText">Text of the button</param>
         /// <param name="offSet">Offset for the button position</param>
-        /// <returns></returns>
+        /// <returns>Initialized button</returns>
         private Button InitializeButton(Panel panel, int position, string buttonText, int offSet)
         {
             Button button = new Button
@@ -611,7 +612,7 @@ namespace DnDTable
                             break;
                         }
 
-                        buttons[tileId].Location = new Point(k * 40, j * 40 - vScrollBar2.Value);
+                        buttons[tileId].Location = new Point(k * tileButtonSize, j * tileButtonSize - vScrollBar2.Value);
                         panel3.Controls.Add(buttons[tileId]);
                         tileId++;
                     }
