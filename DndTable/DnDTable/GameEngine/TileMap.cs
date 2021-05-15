@@ -1,30 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Collections.Generic;
 using System.Drawing;
 
+/// @author  Jaakko Sukuvaara
+/// @version 2020
 namespace GameEngine
 {
+    /// <summary>
+    /// TileMap to store tilemap image
+    /// </summary>
     public class TileMap
     {
-        string tileMapPath;
-        int tileSize;
+        private string tileMapPath;
+        private int tileSize;
         
-        public TileMap()
-        {
+        /// <summary>
+        /// New TileMap
+        /// </summary>
+        public TileMap() {}
 
-        }
-
+        /// <summary>
+        /// New TileMap
+        /// </summary>
+        /// <param name="MapPath">Path to tilemap image</param>
+        /// <param name="TileSize">Size of the tiles</param>
         public TileMap(string MapPath, int TileSize)
         {
             tileMapPath = MapPath;
             tileSize = TileSize;
         }
 
+        /// <summary>
+        /// TileMap Path
+        /// </summary>
         public string TileMapPath { get => tileMapPath; set => tileMapPath = value; }
+
+        /// <summary>
+        /// Tile size
+        /// </summary>
         public int TileSize { get => tileSize; set => tileSize = value; }
 
         /// <summary>
@@ -53,7 +65,11 @@ namespace GameEngine
             return images;
         }
 
-        Image GetImage()
+        /// <summary>
+        /// Get tilamp image
+        /// </summary>
+        /// <returns>image</returns>
+        private Image GetImage()
         {
             return Image.FromFile(TileMapPath);
         }

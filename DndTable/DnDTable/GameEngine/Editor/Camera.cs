@@ -1,17 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing;
+﻿using System.Drawing;
+
+/// @author  Jaakko Sukuvaara
+/// @version 2020
 namespace GameEngine.Editor
 {
+    /// <summary>
+    /// Camera
+    /// </summary>
     public class Camera
     {
-        int x;
-        int y;
-        int fovX;
-        int fovY;
+        private int x;
+        private int y;
+        private int fovX;
+        private int fovY;
 
         /// <summary>
         /// Camera Object

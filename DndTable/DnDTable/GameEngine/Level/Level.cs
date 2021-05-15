@@ -1,15 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Windows.Forms;
 
+/// @author  Jaakko Sukuvaara
+/// @version 2020
 namespace GameEngine.Level
 {
+    /// <summary>
+    /// Level
+    /// </summary>
     public class Level
     {
-        List<Layer> layers;
-        List<TileMap> maps;
+        private List<Layer> layers;
+        private List<TileMap> maps;
 
         /// <summary>
         /// A Level Object
@@ -38,6 +40,10 @@ namespace GameEngine.Level
             layers.Add(layerToAdd);
         }
 
+        /// <summary>
+        /// Add a tilemap to level
+        /// </summary>
+        /// <param name="map">Map to add</param>
         public void AddAMap(TileMap map)
         {
             maps.Add(map);
@@ -59,6 +65,9 @@ namespace GameEngine.Level
             }
         }
 
+        /// <summary>
+        /// Prepare level for saving ( delete empty tiles )
+        /// </summary>
         public void PrepareForSaving()
         {
             foreach(Layer layer in layers)
@@ -70,7 +79,8 @@ namespace GameEngine.Level
                         layer.Tiles[i].PrepareForSaving();
                         continue;
                     }
-                        layer.Tiles.RemoveAt(i);
+                    layer.Tiles.RemoveAt(i);
+                    i--;
                 }
             }
         }
@@ -80,8 +90,14 @@ namespace GameEngine.Level
         /// </summary>
         public List<Layer> Layers { get => layers; set => layers = value; }
 
+        /// <summary>
+        /// Returns a list of Maps
+        /// </summary>
         public List<TileMap> Maps { get => maps; set => maps = value; }
 
+        /// <summary>
+        /// Level Name
+        /// </summary>
         public string Name { get; set; }
     }
 }

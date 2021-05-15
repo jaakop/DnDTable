@@ -1,19 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
+/// @author  Jaakko Sukuvaara
+/// @version 2020
 namespace DnDTable
 {
+    /// <summary>
+    /// Form, which opens when user wants to add a new tilemap to the app
+    /// </summary>
     public partial class AddTileForm : Form
     {
-        LevelEditor levelEditor;
-        string filePath;
+        private LevelEditor levelEditor;
+        private string filePath;
+
+        /// <summary>
+        /// New TileForm
+        /// </summary>
+        /// <param name="editor">Reference to the tilemap editor</param>
         public AddTileForm(LevelEditor editor)
         {
             InitializeComponent();
@@ -21,11 +24,21 @@ namespace DnDTable
             HeightBox.Enabled = false;
         }
 
+        /// <summary>
+        /// Handle text change in WidthBox textbox
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">event</param>
         private void WidthBox_TextChanged(object sender, EventArgs e)
         {
             HeightBox.Text = WidthBox.Text;
         }
 
+        /// <summary>
+        /// Handle OpenFileButton click
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">event</param>
         private void OpenFileButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog fileDialog = new OpenFileDialog();
@@ -37,6 +50,11 @@ namespace DnDTable
             }
         }
 
+        /// <summary>
+        /// Handle Submit button click
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">event</param>
         private void button1_Click(object sender, EventArgs e)
         {
             if(!int.TryParse(WidthBox.Text, out int ree))
