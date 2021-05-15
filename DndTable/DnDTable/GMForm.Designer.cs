@@ -58,7 +58,7 @@
             // BrowseButton
             // 
             this.BrowseButton.Location = new System.Drawing.Point(17, 70);
-            this.BrowseButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BrowseButton.Margin = new System.Windows.Forms.Padding(4);
             this.BrowseButton.Name = "BrowseButton";
             this.BrowseButton.Size = new System.Drawing.Size(100, 28);
             this.BrowseButton.TabIndex = 1;
@@ -69,7 +69,7 @@
             // LoadLevelButton
             // 
             this.LoadLevelButton.Location = new System.Drawing.Point(17, 106);
-            this.LoadLevelButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.LoadLevelButton.Margin = new System.Windows.Forms.Padding(4);
             this.LoadLevelButton.Name = "LoadLevelButton";
             this.LoadLevelButton.Size = new System.Drawing.Size(279, 28);
             this.LoadLevelButton.TabIndex = 2;
@@ -80,7 +80,7 @@
             // levelPath
             // 
             this.levelPath.Location = new System.Drawing.Point(125, 73);
-            this.levelPath.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.levelPath.Margin = new System.Windows.Forms.Padding(4);
             this.levelPath.Name = "levelPath";
             this.levelPath.Size = new System.Drawing.Size(169, 22);
             this.levelPath.TabIndex = 3;
@@ -99,7 +99,7 @@
             // DrawLevelButton
             // 
             this.DrawLevelButton.Location = new System.Drawing.Point(17, 210);
-            this.DrawLevelButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.DrawLevelButton.Margin = new System.Windows.Forms.Padding(4);
             this.DrawLevelButton.Name = "DrawLevelButton";
             this.DrawLevelButton.Size = new System.Drawing.Size(279, 28);
             this.DrawLevelButton.TabIndex = 6;
@@ -111,7 +111,7 @@
             // 
             this.levelCombo.FormattingEnabled = true;
             this.levelCombo.Location = new System.Drawing.Point(17, 177);
-            this.levelCombo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.levelCombo.Margin = new System.Windows.Forms.Padding(4);
             this.levelCombo.Name = "levelCombo";
             this.levelCombo.Size = new System.Drawing.Size(277, 24);
             this.levelCombo.TabIndex = 8;
@@ -130,7 +130,7 @@
             // AddNoteButton
             // 
             this.AddNoteButton.Location = new System.Drawing.Point(652, 164);
-            this.AddNoteButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.AddNoteButton.Margin = new System.Windows.Forms.Padding(4);
             this.AddNoteButton.Name = "AddNoteButton";
             this.AddNoteButton.Size = new System.Drawing.Size(104, 76);
             this.AddNoteButton.TabIndex = 12;
@@ -141,7 +141,7 @@
             // NoteInputTextBox
             // 
             this.NoteInputTextBox.Location = new System.Drawing.Point(361, 164);
-            this.NoteInputTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.NoteInputTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.NoteInputTextBox.Name = "NoteInputTextBox";
             this.NoteInputTextBox.Size = new System.Drawing.Size(276, 74);
             this.NoteInputTextBox.TabIndex = 13;
@@ -152,6 +152,7 @@
             this.NoteTextBox.Location = new System.Drawing.Point(361, 60);
             this.NoteTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.NoteTextBox.Name = "NoteTextBox";
+            this.NoteTextBox.ReadOnly = true;
             this.NoteTextBox.Size = new System.Drawing.Size(276, 74);
             this.NoteTextBox.TabIndex = 14;
             this.NoteTextBox.Text = "";
@@ -205,7 +206,7 @@
             this.Controls.Add(this.BrowseButton);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "GMForm";
             this.Text = "GMFrom";
             this.ResumeLayout(false);

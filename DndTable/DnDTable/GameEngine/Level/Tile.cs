@@ -92,7 +92,8 @@ namespace GameEngine.Level
         }
 
         /// <summary>
-        /// Draws the wireframe of the tile
+        /// Draws the
+        /// +wireframe of the tile
         /// </summary>
         /// <param name="g">Graphics to draw on</param>
         /// <param name="size">Size of the drawn tile wireframe</param>
