@@ -8,8 +8,6 @@ This project is a simple 2d tilemap editor in windows forms with a campaing wind
 ## School
 School had specific requirements for this project
 
-Use windows forms
-
-Use MSSQL databse
-
-Create relevant diagrams
+- Use windows forms
+- Use MSSQL databse
+- Create relevant diagrams
